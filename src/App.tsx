@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Navbar } from './components/layout/Navbar';
 import { AIXPTHero } from './components/hero/AIXPTHero';
 import { Features } from './components/pages/Features';
@@ -40,14 +41,45 @@ function App() {
         return <AnalysteAutomatique360 onNavigate={setCurrentPage} onOpenConsultation={() => setIsConsultationOpen(true)} />;
       default:
         return (
-          <AIXPTHero 
-            title="L'automatisation IA qui propulse vos affaires."
-            subtitle="Transformez votre entreprise avec des solutions d'automatisation IA de pointe qui évoluent avec vos ambitions et révolutionnent votre façon de travailler"
-            ctaText="Commencer Votre Voyage IA"
-            onCtaClick={handleCtaClick}
-            onNavigate={setCurrentPage}
-            onOpenConsultation={() => setIsConsultationOpen(true)}
-          />
+          <>
+            <Helmet>
+              <script type="application/ld+json">
+                {JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Organization",
+                  "name": "AIXPT",
+                  "description": "Pionniers de l'automatisation intelligente basés au Québec, nous créons des solutions IA pour transformer les entreprises.",
+                  "url": "https://aixpt.com",
+                  "logo": "https://aixpt.com/logoaixpt.png",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressRegion": "Québec",
+                    "addressCountry": "CA",
+                    "addressLocality": "Montréal"
+                  },
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+1-555-123-4567",
+                    "contactType": "customer service",
+                    "email": "info@aixpt.com",
+                    "areaServed": "Québec, Canada"
+                  },
+                  "sameAs": [
+                    "https://twitter.com/aixpt",
+                    "https://linkedin.com/company/aixpt"
+                  ]
+                })}
+              </script>
+            </Helmet>
+            <AIXPTHero 
+              title="L'automatisation IA qui propulse vos affaires."
+              subtitle="Transformez votre entreprise avec des solutions d'automatisation IA de pointe qui évoluent avec vos ambitions et révolutionnent votre façon de travailler"
+              ctaText="Commencer Votre Voyage IA"
+              onCtaClick={handleCtaClick}
+              onNavigate={setCurrentPage}
+              onOpenConsultation={() => setIsConsultationOpen(true)}
+            />
+          </>
         );
     }
   };

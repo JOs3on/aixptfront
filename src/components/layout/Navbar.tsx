@@ -26,6 +26,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'apropos', label: 'À propos' },
   ];
 
+
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-blue-500/20">
@@ -38,22 +40,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center cursor-pointer flex-shrink-0"
               onClick={() => onPageChange('accueil')}
             >
-              <img src="/logoaixpt.png" alt="Aixpt Logo" className="h-10 md:h-12 w-auto" />
+              <img src="/logoaixpt.png" alt="Aixpt Logo - Automatisation IA Québec" className="h-10 md:h-12 w-auto" />
             </motion.div>
 
             {/* Desktop Navigation and Actions - Right Aligned */}
             <div className="hidden md:flex items-center ml-auto space-x-8">
               {/* Navigation Links */}
-              <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-6 relative">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => onPageChange(item.id)}
-                    className={`text-sm font-medium transition-colors duration-200 ${
-                      currentPage === item.id
-                        ? 'text-blue-400'
-                        : 'text-gray-300 hover:text-white'
-                    }`}
+                    className={`text-sm font-medium transition-colors duration-200 flex items-center 
+                    ${currentPage === item.id ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`}
                   >
                     {item.label}
                   </button>
@@ -111,11 +110,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onPageChange(item.id);
                         setIsMenuOpen(false);
                       }}
-                      className={`text-left text-sm font-medium transition-colors duration-200 ${
-                        currentPage === item.id
-                          ? 'text-blue-400'
-                          : 'text-gray-300 hover:text-white'
-                      }`}
+                      className={`text-left text-sm font-medium transition-colors duration-200 
+                      ${currentPage === item.id ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`}
                     >
                       {item.label}
                     </button>

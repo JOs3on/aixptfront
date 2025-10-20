@@ -74,11 +74,16 @@ const PossibleIntegrations: React.FC<PossibleIntegrationsProps> = ({
     },
     {
       id: "apicustom",
-      name: "ApiCustom",
+      name: "Sur mesure",
       image: "/api.png",
     },
     {
       id: "more",
+      name: "Et encore plus...",
+      image: "/encoreplus.png",
+    },
+    {
+      id: "more-2",
       name: "Et encore plus...",
       image: "/encoreplus.png",
     },

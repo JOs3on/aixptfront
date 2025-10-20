@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/logo2.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AIXPT - L’automatisation IA qui propulse vos affaires.</title>
     <meta name="description" content="Transformez votre entreprise avec des solutions d'automatisation IA de pointe" />
@@ -10,5 +10,24 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <script type="text/javascript">
+      (function(d, t) {
+        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        v.onload = function() {
+          window.voiceflow.chat.load({
+            verify: { projectID: '67e4543319c28c2b0898f9b4' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production',
+            voice: {
+              url: "https://runtime-api.voiceflow.com"
+            }
+          });
+        }
+        v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+        v.type = "text/javascript"; 
+        s.parentNode.insertBefore(v, s);
+      })(document, 'script');
+    </script>
   </body>
 </html>

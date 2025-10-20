@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Mail, Phone, ArrowRight, CheckCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -54,6 +55,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenCons
 
   return (
     <div className="min-h-screen bg-black py-16 px-4">
+      <Helmet>
+        <title>Contactez AIXPT - Services IA et Automatisation au Québec</title>
+        <meta name="description" content="Contactez AIXPT au Québec pour des solutions d'automatisation IA et services intelligents. Obtenez une consultation gratuite avec notre équipe basée à Montréal." />
+        <meta name="keywords" content="contact AIXPT, IA Québec, automatisation entreprise, services IA Montréal, consultation IA, support AIXPT" />
+      </Helmet>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -63,7 +69,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenCons
         {/* Hero/Intro Section */}
         <section className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Nous Contacter
+            Contactez AIXPT au Québec - Services IA
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
             Prêt à transformer votre entreprise avec l&apos;IA ? Discutons de vos besoins.

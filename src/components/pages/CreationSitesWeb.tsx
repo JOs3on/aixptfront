@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Globe, Palette, Code, Smartphone, CheckCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/button';
 
@@ -29,6 +30,11 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 pb-16">
+      <Helmet>
+        <title>Création Sites Web Sur Mesure au Québec - AIXPT</title>
+        <meta name="description" content="Création de sites web sur mesure au Québec par AIXPT Montréal. Design moderne, optimisation SEO pour PME de la province et Montréal." />
+        <meta name="keywords" content="création sites web Québec, développement web Montréal AIXPT, sites responsive Québec, SEO web province, agence web IA Québec" />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.div
@@ -65,7 +71,7 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
               Création de Sites Web
             </span>
             <br />
-            <span className="text-white">Sur Mesure</span>
+            <span className="text-white">Sur Mesure au Québec - AIXPT</span>
           </h1>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">

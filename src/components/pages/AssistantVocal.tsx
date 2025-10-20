@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Mic, Phone, Clock, Brain, CheckCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/button';
 
@@ -29,6 +30,11 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 pb-16">
+      <Helmet>
+        <title>Assistant Vocal IA 24/7 au Québec - AIXPT</title>
+        <meta name="description" content="Assistant vocal IA 24/7 pour entreprises au Québec par AIXPT Montréal. Gestion automatisée des appels, reconnaissance vocale pour PME de la province." />
+        <meta name="keywords" content="assistant vocal Québec, IA vocale Montréal, réception appels IA AIXPT, service client IA Québec, reconnaissance vocale automatisée" />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.div
@@ -65,7 +71,7 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
               Assistant Vocal
             </span>
             <br />
-            <span className="text-white">24/7</span>
+            <span className="text-white">24/7 au Québec - AIXPT</span>
           </h1>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { BarChart3, Database, FileText, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/button';
 
@@ -35,6 +36,11 @@ export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ 
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 pb-16">
+      <Helmet>
+        <title>Analyste Automatique 360° IA au Québec - AIXPT Montréal</title>
+        <meta name="description" content="Analyste automatique 360° IA au Québec par AIXPT. Transformez données en rapports et analyses intelligentes pour entreprises à Montréal et province du Québec." />
+        <meta name="keywords" content="analyste automatique Québec, IA analyse données Montréal, rapports IA AIXPT, automatisation analytics Québec, dashboards IA" />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.div
@@ -71,7 +77,7 @@ export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ 
               Analyste Automatique
             </span>
             <br />
-            <span className="text-white">360°</span>
+            <span className="text-white">360° au Québec - AIXPT</span>
           </h1>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Mic, Mail, MessageCircle, Globe, ArrowRight, BarChart3 } from 'lucide-react';
 import { Button } from '../ui/button';
 
@@ -59,6 +60,11 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate, onOpenConsultati
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 pb-16">
+      <Helmet>
+        <title>Services IA AIXPT au Québec - Automatisation et IA pour PME et grandes entreprises</title>
+        <meta name="description" content="Découvrez nos solutions d'intelligence artificielle au Québec pour transformer votre entreprise. Services d'automatisation IA à Montréal et province: assistants vocaux, agents conversationnels, création web." />
+        <meta name="keywords" content="services IA Québec, automatisation Montréal AIXPT, agents conversationnels Québec, création sites web IA province, analyste automatique 360 Québec" />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -72,7 +78,7 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate, onOpenConsultati
               Services
             </span>
             <br />
-            <span className="text-white">AIXPT</span>
+            <span className="text-white">au Québec - AIXPT</span>
           </h1>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
