@@ -2,14 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Mic, Mail, MessageCircle, Globe, ArrowRight, BarChart3 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 
 interface FeaturesProps {
-  onNavigate: (page: string) => void;
   onOpenConsultation: () => void;
 }
 
-export const Features: React.FC<FeaturesProps> = ({ onNavigate, onOpenConsultation }) => {
+export const Features: React.FC<FeaturesProps> = ({ onOpenConsultation }) => {
+  const navigate = useNavigate();
   const features = [
     {
       id: 'assistant-vocal',
@@ -80,7 +81,7 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate, onOpenConsultati
             <br />
             <span className="text-white">au Québec - AIXPT</span>
           </h1>
-          
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Découvrez nos solutions d'intelligence artificielle conçues pour transformer votre entreprise
           </p>
@@ -90,7 +91,7 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate, onOpenConsultati
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
-            
+
             return (
               <motion.div
                 key={feature.id}
@@ -105,13 +106,13 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate, onOpenConsultati
                   </div>
                   <h3 className="text-2xl font-bold text-white">{feature.title}</h3>
                 </div>
-                
+
                 <p className="text-gray-300 mb-6 leading-relaxed">
                   {feature.description}
                 </p>
-                
+
                 <Button
-                  onClick={() => onNavigate(feature.id)}
+                  onClick={() => navigate(`/${feature.id}`)}
                   className={`bg-gradient-to-r ${feature.gradient} hover:${feature.gradient} text-white px-6 py-3 rounded-lg transition-all duration-300 transform group-hover:scale-105 w-full`}
                 >
                   En savoir plus

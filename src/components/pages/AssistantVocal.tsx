@@ -2,14 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Mic, Phone, Clock, Brain, CheckCircle, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 
 interface AssistantVocalProps {
-  onNavigate: (page: string) => void;
   onOpenConsultation: () => void;
 }
 
-export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOpenConsultation }) => {
+export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onOpenConsultation }) => {
+  const navigate = useNavigate();
   const functionalities = [
     "Réception d'appels automatisée 24h/24",
     "Reconnaissance vocale avancée",
@@ -44,7 +45,7 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
           className="mb-8"
         >
           <Button
-            onClick={() => onNavigate('fonctionnalites')}
+            onClick={() => navigate('/services')}
             variant="ghost"
             className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10"
           >
@@ -65,7 +66,7 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
               <Mic className="h-16 w-16 text-blue-400" />
             </div>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Assistant Vocal
@@ -73,7 +74,7 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
             <br />
             <span className="text-white">24/7 au Québec - AIXPT</span>
           </h1>
-          
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Chaque appel, chaque information — synchronisés sans effort. Propulsé par l'intelligence artificielle.
           </p>
@@ -88,9 +89,9 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
         >
           <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
           <p className="text-gray-300 leading-relaxed text-lg">
-            Notre assistant vocal IA révolutionne la gestion des appels entrants en offrant une expérience 
-            client exceptionnelle 24h/24 et 7j/7. Grâce à des technologies de pointe en reconnaissance 
-            vocale et traitement du langage naturel, votre entreprise peut maintenir une présence 
+            Notre assistant vocal IA révolutionne la gestion des appels entrants en offrant une expérience
+            client exceptionnelle 24h/24 et 7j/7. Grâce à des technologies de pointe en reconnaissance
+            vocale et traitement du langage naturel, votre entreprise peut maintenir une présence
             professionnelle constante, même en dehors des heures d'ouverture.
           </p>
         </motion.div>
@@ -107,7 +108,7 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
               <Phone className="h-8 w-8 text-blue-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Services</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {functionalities.map((functionality, index) => (
                 <motion.li
@@ -135,7 +136,7 @@ export const AssistantVocal: React.FC<AssistantVocalProps> = ({ onNavigate, onOp
               <Brain className="h-8 w-8 text-cyan-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Avantages</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {advantages.map((advantage, index) => (
                 <motion.li

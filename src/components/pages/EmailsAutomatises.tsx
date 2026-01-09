@@ -1,14 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Target, Zap, TrendingUp, CheckCircle, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 
 interface EmailsAutomatisesProps {
-  onNavigate: (page: string) => void;
   onOpenConsultation: () => void;
 }
 
-export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onNavigate, onOpenConsultation }) => {
+export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenConsultation }) => {
+  const navigate = useNavigate();
   const functionalities = [
     "Segmentation automatique des prospects",
     "Personnalisation dynamique du contenu",
@@ -38,7 +39,7 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onNavigate
           className="mb-8"
         >
           <Button
-            onClick={() => onNavigate('fonctionnalites')}
+            onClick={() => navigate('/services')}
             variant="ghost"
             className="text-purple-400 hover:text-purple-300 hover:bg-purple-400/10"
           >
@@ -59,7 +60,7 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onNavigate
               <Mail className="h-16 w-16 text-purple-400" />
             </div>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Emails Automatisés
@@ -67,7 +68,7 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onNavigate
             <br />
             <span className="text-white">Personnalisés</span>
           </h1>
-          
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Prospection personnalisée. En pilote automatique.
           </p>
@@ -82,9 +83,9 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onNavigate
         >
           <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
           <p className="text-gray-300 leading-relaxed text-lg">
-            Transformez votre stratégie email marketing avec notre système d'automatisation intelligent. 
-            Notre IA analyse le contexte client pour créer des courriels ciblés personalisés 
-            qui convertissent. Chaque email est optimisé pour maximiser l'engagement et générer des 
+            Transformez votre stratégie email marketing avec notre système d'automatisation intelligent.
+            Notre IA analyse le contexte client pour créer des courriels ciblés personalisés
+            qui convertissent. Chaque email est optimisé pour maximiser l'engagement et générer des
             résultats mesurables.
           </p>
         </motion.div>
@@ -101,7 +102,7 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onNavigate
               <Mail className="h-8 w-8 text-purple-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Services</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {functionalities.map((functionality, index) => (
                 <motion.li
@@ -129,7 +130,7 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onNavigate
               <TrendingUp className="h-8 w-8 text-pink-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Avantages</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {advantages.map((advantage, index) => (
                 <motion.li

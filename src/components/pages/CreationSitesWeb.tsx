@@ -2,14 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Globe, Palette, Code, Smartphone, CheckCircle, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 
 interface CreationSitesWebProps {
-  onNavigate: (page: string) => void;
   onOpenConsultation: () => void;
 }
 
-export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, onOpenConsultation }) => {
+export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onOpenConsultation }) => {
+  const navigate = useNavigate();
   const functionalities = [
     "Design responsive et moderne",
     "Optimisation SEO avancée",
@@ -44,7 +45,7 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
           className="mb-8"
         >
           <Button
-            onClick={() => onNavigate('fonctionnalites')}
+            onClick={() => navigate('/services')}
             variant="ghost"
             className="text-orange-400 hover:text-orange-300 hover:bg-orange-400/10"
           >
@@ -65,7 +66,7 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
               <Globe className="h-16 w-16 text-orange-400" />
             </div>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
               Création de Sites Web
@@ -73,7 +74,7 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
             <br />
             <span className="text-white">Sur Mesure au Québec - AIXPT</span>
           </h1>
-          
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Un design remarquable, une fonctionnalité fluide. Votre vision, notre expertise.
           </p>
@@ -88,9 +89,9 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
         >
           <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
           <p className="text-gray-300 leading-relaxed text-lg">
-            Nous créons des sites web exceptionnels qui allient esthétique moderne et performance 
-            technique. Chaque projet est conçu sur mesure pour refléter votre identité de marque 
-            tout en offrant une expérience utilisateur optimale. De la conception à la mise en ligne, 
+            Nous créons des sites web exceptionnels qui allient esthétique moderne et performance
+            technique. Chaque projet est conçu sur mesure pour refléter votre identité de marque
+            tout en offrant une expérience utilisateur optimale. De la conception à la mise en ligne,
             nous vous accompagnons pour créer une présence digitale qui convertit.
           </p>
         </motion.div>
@@ -107,7 +108,7 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
               <Code className="h-8 w-8 text-orange-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Services</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {functionalities.map((functionality, index) => (
                 <motion.li
@@ -135,7 +136,7 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onNavigate, 
               <Palette className="h-8 w-8 text-red-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Avantages</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {advantages.map((advantage, index) => (
                 <motion.li

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, ArrowRight, Cpu, Brain } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { MatrixRain } from '../effects/MatrixRain';
 import { AnimatedTextCycle } from '../effects/AnimatedTextCycle';
@@ -11,8 +12,6 @@ interface AIXPTHeroProps {
   title?: string;
   subtitle?: string;
   ctaText?: string;
-  onCtaClick?: () => void;
-  onNavigate?: (page: string) => void;
   onOpenConsultation?: () => void;
 }
 
@@ -20,10 +19,9 @@ export const AIXPTHero: React.FC<AIXPTHeroProps> = ({
   title = "L'automatisation IA qui propulse vos affaires.",
   subtitle = "Transformez votre entreprise avec des solutions d'automatisation IA de pointe qui évoluent avec vos ambitions",
   ctaText = "Commencer Votre Voyage IA",
-  onCtaClick = () => console.log("Démarrage du voyage IA..."),
-  onNavigate,
   onOpenConsultation = () => console.log("Open consultation")
 }) => {
+  const navigate = useNavigate();
   const automationWords = [
     "l'IA Automatisée",
     "l'Apprentissage Machine",
@@ -36,7 +34,7 @@ export const AIXPTHero: React.FC<AIXPTHeroProps> = ({
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-hidden bg-black">
       {/* Matrix Rain Background */}
-      <MatrixRain 
+      <MatrixRain
         fontSize={16}
         color="#0066ff"
         characters="01AIXPT"
@@ -50,7 +48,7 @@ export const AIXPTHero: React.FC<AIXPTHeroProps> = ({
       {/* Content */}
       <div className="relative z-20 flex min-h-screen items-center justify-center px-4 pt-32 w-full max-w-full">
         <div className="max-w-6xl mx-auto text-center w-full">
-          
+
           {/* AIXPT Logo/Brand - Keep spacing only */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -99,7 +97,7 @@ export const AIXPTHero: React.FC<AIXPTHeroProps> = ({
             className="flex justify-center items-center mb-16 px-4"
           >
             <Button
-              onClick={() => onNavigate && onNavigate('fonctionnalites')}
+              onClick={() => navigate('/services')}
               className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/25"
             >
               <Zap className="mr-2 h-4 w-4 md:h-5 md:w-5" />

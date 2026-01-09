@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Mail, Phone, ArrowRight, CheckCircle, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 
 interface ContactPageProps {
-  onNavigate: (page: string) => void;
   onOpenConsultation: () => void;
 }
 
-export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenConsultation }) => {
+export const ContactPage: React.FC<ContactPageProps> = ({ onOpenConsultation }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nomComplet: '',
     adresseCourriel: '',
@@ -128,7 +129,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenCons
               </p>
               <Button
                 variant="outline"
-                onClick={() => onNavigate('creation-sites-web')}
+                onClick={() => navigate('/creation-sites-web')}
                 className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
               >
                 En Savoir Plus <ArrowRight className="ml-2 h-4 w-4" />
@@ -147,7 +148,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenCons
               </p>
               <Button
                 variant="outline"
-                onClick={() => onNavigate('assistant-vocal')}
+                onClick={() => navigate('/assistant-vocal')}
                 className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
               >
                 En Savoir Plus <ArrowRight className="ml-2 h-4 w-4" />
@@ -166,7 +167,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate, onOpenCons
               </p>
               <Button
                 variant="outline"
-                onClick={() => onNavigate('agents-conversationnels')}
+                onClick={() => navigate('/agents-conversationnels')}
                 className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
               >
                 En Savoir Plus <ArrowRight className="ml-2 h-4 w-4" />

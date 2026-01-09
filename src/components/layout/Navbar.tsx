@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Calendar } from 'lucide-react';
+import { NavLink, Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { ConsultationModal } from '../modals/ConsultationModal';
 
 interface NavbarProps {
-  currentPage: string;
-  onPageChange: (page: string) => void;
   isConsultationOpen: boolean;
   onConsultationToggle: (open: boolean) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ 
-  currentPage, 
-  onPageChange, 
-  isConsultationOpen, 
-  onConsultationToggle 
+export const Navbar: React.FC<NavbarProps> = ({
+  isConsultationOpen,
+  onConsultationToggle
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'accueil', label: 'Accueil' },
-    { id: 'fonctionnalites', label: 'Services' },
-    { id: 'contact', label: 'Nous Contacter' },
-    { id: 'apropos', label: 'À propos' },
+    { id: '/', label: 'Accueil' },
+    { id: '/services', label: 'Services' },
+    { id: '/contact', label: 'Nous Contacter' },
+    { id: '/apropos', label: 'À propos' },
   ];
-
-
 
   return (
     <>
@@ -37,10 +32,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex items-center cursor-pointer flex-shrink-0"
-              onClick={() => onPageChange('accueil')}
+              className="flex items-center flex-shrink-0"
             >
-              <img src="/logoaixpt.png" alt="Aixpt Logo - Automatisation IA Québec" className="h-10 md:h-12 w-auto" />
+              <Link to="/">
+                <img src="/logoaixpt.png" alt="Aixpt Logo - Automatisation IA Québec" className="h-10 md:h-12 w-auto cursor-pointer" />
+              </Link>
             </motion.div>
 
             {/* Desktop Navigation and Actions - Right Aligned */}
@@ -48,14 +44,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Navigation Links */}
               <div className="flex items-center space-x-6 relative">
                 {navItems.map((item) => (
-                  <button
+                  <NavLink
                     key={item.id}
-                    onClick={() => onPageChange(item.id)}
-                    className={`text-sm font-medium transition-colors duration-200 flex items-center 
-                    ${currentPage === item.id ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`}
+                    to={item.id}
+                    className={({ isActive }) =>
+                      `text-sm font-medium transition-colors duration-200 flex items-center 
+                      ${isActive ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`
+                    }
                   >
                     {item.label}
-                  </button>
+                  </NavLink>
                 ))}
               </div>
 
@@ -69,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   Portail
                 </a>
-                
+
                 <Button
                   onClick={() => onConsultationToggle(true)}
                   className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-4 lg:px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm whitespace-nowrap"
@@ -80,7 +78,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </Button>
               </div>
             </div>
-
 
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -104,19 +101,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <div className="flex flex-col space-y-4">
                   {navItems.map((item) => (
-                    <button
+                    <NavLink
                       key={item.id}
-                      onClick={() => {
-                        onPageChange(item.id);
-                        setIsMenuOpen(false);
-                      }}
-                      className={`text-left text-sm font-medium transition-colors duration-200 
-                      ${currentPage === item.id ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`}
+                      to={item.id}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={({ isActive }) =>
+                        `text-left text-sm font-medium transition-colors duration-200 
+                        ${isActive ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`
+                      }
                     >
                       {item.label}
-                    </button>
+                    </NavLink>
                   ))}
-                  
+
                   <a
                     href="https://portal.aixpt.ca"
                     target="_blank"
@@ -125,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   >
                     Accéder au Portail
                   </a>
-                  
+
                   <Button
                     onClick={() => {
                       onConsultationToggle(true);
@@ -143,7 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </nav>
 
-      <ConsultationModal 
+      <ConsultationModal
         isOpen={isConsultationOpen}
         onClose={() => onConsultationToggle(false)}
       />

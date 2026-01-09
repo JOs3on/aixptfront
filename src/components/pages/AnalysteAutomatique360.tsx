@@ -2,14 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { BarChart3, Database, FileText, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 
 interface AnalysteAutomatique360Props {
-  onNavigate: (page: string) => void;
   onOpenConsultation: () => void;
 }
 
-export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ onNavigate, onOpenConsultation }) => {
+export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ onOpenConsultation }) => {
+  const navigate = useNavigate();
   const functionalities = [
     "Connexion aux bases clients / CRM / ERP / tableurs",
     "Importation & structuration de données «lousses»",
@@ -50,7 +51,7 @@ export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ 
           className="mb-8"
         >
           <Button
-            onClick={() => onNavigate('fonctionnalites')}
+            onClick={() => navigate('/services')}
             variant="ghost"
             className="text-indigo-400 hover:text-indigo-300 hover:bg-indigo-400/10"
           >
@@ -71,7 +72,7 @@ export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ 
               <BarChart3 className="h-16 w-16 text-indigo-400" />
             </div>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
               Analyste Automatique
@@ -79,7 +80,7 @@ export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ 
             <br />
             <span className="text-white">360° au Québec - AIXPT</span>
           </h1>
-          
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Transformez vos données brutes en rapports, présentations & feuilles de calcul — en un clic.
           </p>
@@ -110,7 +111,7 @@ export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ 
               <Database className="h-8 w-8 text-indigo-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Services</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {functionalities.map((functionality, index) => (
                 <motion.li
@@ -138,7 +139,7 @@ export const AnalysteAutomatique360: React.FC<AnalysteAutomatique360Props> = ({ 
               <FileText className="h-8 w-8 text-purple-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Avantages</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {advantages.map((advantage, index) => (
                 <motion.li

@@ -2,14 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { MessageCircle, Bot, Users, Sparkles, CheckCircle, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 
 interface AgentsConversationnelsProps {
-  onNavigate: (page: string) => void;
   onOpenConsultation: () => void;
 }
 
-export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ onNavigate, onOpenConsultation }) => {
+export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ onOpenConsultation }) => {
+  const navigate = useNavigate();
   const functionalities = [
     "Conversations naturelles multi-langues",
     "Apprentissage continu des interactions",
@@ -44,7 +45,7 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
           className="mb-8"
         >
           <Button
-            onClick={() => onNavigate('fonctionnalites')}
+            onClick={() => navigate('/services')}
             variant="ghost"
             className="text-green-400 hover:text-green-300 hover:bg-green-400/10"
           >
@@ -65,7 +66,7 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
               <MessageCircle className="h-16 w-16 text-green-400" />
             </div>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
               Agents Conversationnels
@@ -73,7 +74,7 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
             <br />
             <span className="text-white">IA au Québec - AIXPT</span>
           </h1>
-          
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Des conversations fluides, gestion des relations clients en automatique.
           </p>
@@ -88,9 +89,9 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
         >
           <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
           <p className="text-gray-300 leading-relaxed text-lg">
-            Nos agents conversationnels IA redéfinissent l'expérience client en offrant des interactions 
-            naturelles et personnalisées à grande échelle. Capables de comprendre le contexte et les 
-            nuances, ils fournissent un support instantané tout en apprenant continuellement pour 
+            Nos agents conversationnels IA redéfinissent l'expérience client en offrant des interactions
+            naturelles et personnalisées à grande échelle. Capables de comprendre le contexte et les
+            nuances, ils fournissent un support instantané tout en apprenant continuellement pour
             améliorer leurs réponses.
           </p>
         </motion.div>
@@ -107,7 +108,7 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
               <MessageCircle className="h-8 w-8 text-green-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Services</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {functionalities.map((functionality, index) => (
                 <motion.li
@@ -135,7 +136,7 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
               <Users className="h-8 w-8 text-emerald-400 mr-3" />
               <h2 className="text-2xl font-bold text-white">Avantages</h2>
             </div>
-            
+
             <ul className="space-y-4">
               {advantages.map((advantage, index) => (
                 <motion.li
