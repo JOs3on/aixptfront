@@ -30,7 +30,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenConsultation }) 
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('https://hook.us2.make.com/7veoaqbfj1iiuyrjuqto17n6onrfktwt', {
+      const response = await fetch(import.meta.env.VITE_MAKE_WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

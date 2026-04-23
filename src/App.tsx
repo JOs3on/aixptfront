@@ -11,6 +11,9 @@ import { AgentsConversationnels } from './components/pages/AgentsConversationnel
 import { CreationSitesWeb } from './components/pages/CreationSitesWeb';
 import { AnalysteAutomatique360 } from './components/pages/AnalysteAutomatique360';
 import { ContactPage } from './components/pages/ContactPage';
+import ReflectShowcase from './components/ReflectShowcase';
+import AIIntelligenceBridge from './components/AIIntelligenceBridge';
+
 
 function App() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
@@ -59,7 +62,7 @@ function App() {
                 </Helmet>
                 <AIXPTHero
                   title="L'automatisation IA qui propulse vos affaires."
-                  subtitle="Transformez votre entreprise avec des solutions d'automatisation IA de pointe qui évoluent avec vos ambitions et révolutionnent votre façon de travailler"
+                  subtitle="Transformez votre entreprise avec des solutions d'automatisation IA de pointe qui évoluent with vos ambitions et révolutionnent votre façon de travailler"
                   ctaText="Commencer Votre Voyage IA"
                   onOpenConsultation={() => setIsConsultationOpen(true)}
                 />
@@ -73,6 +76,10 @@ function App() {
             <Route path="/agents-conversationnels" element={<AgentsConversationnels onOpenConsultation={() => setIsConsultationOpen(true)} />} />
             <Route path="/creation-sites-web" element={<CreationSitesWeb onOpenConsultation={() => setIsConsultationOpen(true)} />} />
             <Route path="/analyste-automatique-360" element={<AnalysteAutomatique360 onOpenConsultation={() => setIsConsultationOpen(true)} />} />
+
+            <Route path="/test-reflect" element={<div className="pt-24"><ReflectShowcase /></div>} />
+            <Route path="/bridge" element={<div className="pt-24"><AIIntelligenceBridge /></div>} />
+
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

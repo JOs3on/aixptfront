@@ -157,3 +157,7 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+.drop-shadow-glow {
+  filter: drop-shadow(0 0 10px rgba(165, 175, 230, 0.8));
+}
