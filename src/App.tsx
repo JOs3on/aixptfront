@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Navbar } from './components/layout/Navbar';
 import { AIXPTHero } from './components/hero/AIXPTHero';
@@ -13,20 +13,28 @@ import { AnalysteAutomatique360 } from './components/pages/AnalysteAutomatique36
 import { ContactPage } from './components/pages/ContactPage';
 import ReflectShowcase from './components/ReflectShowcase';
 import AIIntelligenceBridge from './components/AIIntelligenceBridge';
+import { Sandbox } from './components/pages/Sandbox';
+import { VoiceflowWidget } from './components/layout/VoiceflowWidget';
 
 
-function App() {
+function AppContent() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const location = useLocation();
+  const isSandbox = location.pathname.startsWith('/sandbox');
 
   return (
-    <Router>
-      <div className="min-h-screen overflow-x-hidden w-full max-w-full">
-        <Navbar
-          isConsultationOpen={isConsultationOpen}
-          onConsultationToggle={setIsConsultationOpen}
-        />
-        <div className="w-full max-w-full overflow-x-hidden">
-          <Routes>
+    <div className="min-h-screen overflow-x-hidden w-full max-w-full">
+      {!isSandbox && (
+        <>
+          <Navbar
+            isConsultationOpen={isConsultationOpen}
+            onConsultationToggle={setIsConsultationOpen}
+          />
+          <VoiceflowWidget />
+        </>
+      )}
+      <div className="w-full max-w-full overflow-x-hidden">
+        <Routes>
             <Route path="/" element={
               <>
                 <Helmet>
@@ -80,12 +88,22 @@ function App() {
             <Route path="/test-reflect" element={<div className="pt-24"><ReflectShowcase /></div>} />
             <Route path="/bridge" element={<div className="pt-24"><AIIntelligenceBridge /></div>} />
 
+            <Route path="/sandbox/:clientName" element={<Sandbox />} />
+            <Route path="/sandbox" element={<Sandbox />} />
+
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </div>
       </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
