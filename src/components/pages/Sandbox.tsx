@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Copy, Check, MessageSquare, MousePointerClick, Zap, Car, Activity, Flame } from 'lucide-react';
+import { Copy, Check, MessageSquare, MousePointerClick, Zap } from 'lucide-react';
 
 declare global {
   interface Window {
@@ -18,7 +18,7 @@ export const Sandbox: React.FC = () => {
     ? clientName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
     : '';
 
-  // Detect if the loaded URL has dealership/automotive keywords
+  // Determine active industry purely based on URL path keywords
   const isDealershipRoute = clientName 
     ? (clientName.toLowerCase().includes('concessionnaire') || 
        clientName.toLowerCase().includes('auto') || 
@@ -29,7 +29,6 @@ export const Sandbox: React.FC = () => {
        clientName.toLowerCase().includes('concession'))
     : false;
 
-  // Detect if the loaded URL has HVAC/CVC/technician keywords
   const isHVACRoute = clientName 
     ? (clientName.toLowerCase().includes('hvac') || 
        clientName.toLowerCase().includes('cvc') || 
@@ -40,38 +39,42 @@ export const Sandbox: React.FC = () => {
        clientName.toLowerCase().includes('technicien'))
     : false;
 
-  // Set active industry tab (pre-selected based on URL path context, defaults to dentaire)
-  const [activeTab, setActiveTab] = useState<'dentaire' | 'concessionnaire' | 'hvac'>(
-    isDealershipRoute ? 'concessionnaire' : isHVACRoute ? 'hvac' : 'dentaire'
-  );
+  const activeIndustry = isDealershipRoute 
+    ? 'concessionnaire' 
+    : isHVACRoute 
+      ? 'hvac' 
+      : 'dentaire';
 
-  // Dynamically resolve titles and instruction content based on active industry tab
-  const content = {
+  // Config for each independent sandbox industry page
+  const pageData = {
     dentaire: {
-      clientName: formattedClientName || 'Votre Clinique',
+      projectId: '69f8ba943ee4fb7bf5d64a8f',
+      clientTitle: formattedClientName || 'Votre Clinique Dentaire',
       intro: "Pour tester comment éliminer l'attente liée aux formulaires le soir et la fin de semaine, suivez ces étapes :",
-      question: "J'ai une urgence dentaire et j'ai très mal. Quelle est votre prochaine disponibilité ?",
+      question: "Bonjour, j'ai une grosse rage de dent et je n'arrive pas à dormir. Est-ce que vous auriez une place d'urgence aujourd'hui ?",
       step3: "Laissez l'assistant vous guider. Répondez naturellement à ses questions (vous pouvez entrer un courriel ou numéro fictif) pour voir comment il collecte les informations et finalise la prise de rendez-vous de A à Z.",
       observation: "Remarquez comment le système gère tout l'échange et confirme la prise en charge sans qu'un humain n'ait à intervenir."
     },
     concessionnaire: {
-      clientName: formattedClientName || 'Nom du concessionnaire',
+      projectId: '6a159b43d9cb2b056b7f35e5', // Specific Voiceflow embed project ID for car dealerships
+      clientTitle: formattedClientName || 'Nom du Concessionnaire',
       intro: "Pour tester comment garder l'élan d'un acheteur le soir, suivez ces étapes :",
-      question: "Je regarde le VUS noir sur votre page, est-il toujours sur la cour en ce moment ?",
+      question: "Bonjour, j'aimerais savoir si le VUS noir que vous avez en inventaire est toujours disponible pour un essai routier ?",
       step3: "Laissez l'assistant répondre et vous guider (vous pouvez utiliser des fausses coordonnées s'il en demande pour réserver une visite).",
       observation: "Remarquez comment il répond d'abord à la question pour garder l'attention du client, au lieu d'exiger un formulaire avant de donner l'information."
     },
     hvac: {
-      clientName: formattedClientName || "Nom de l'entreprise",
+      projectId: '69f8ba943ee4fb7bf5d64a8f', // Fallback to default ID until dedicated HVAC project is set up
+      clientTitle: formattedClientName || "Nom de l'entreprise CVC",
       intro: "Pour tester comment éliminer l'incertitude d'un client qui a une urgence technique le soir ou la fin de semaine, suivez ces étapes :",
-      question: "Ma thermopompe/climatisation vient de lâcher complètement, c'est une urgence. Avez-vous un technicien qui peut passer rapidement ?",
+      question: "Bonjour, ma thermopompe vient de s'arrêter et il fait super chaud dans la maison. Est-ce que vous auriez un technicien disponible rapidement ?",
       step3: "Laissez l'assistant prendre le relais. Donnez-lui une ville (ou adresse) et de fausses coordonnées lorsqu'il les demande pour préparer le dossier du technicien.",
       observation: "Remarquez comment l'assistant ne se contente pas de prendre un message : il qualifie la zone de déplacement, puis consulte l'horaire pour confirmer instantanément qu'un technicien peut être dispatché à un moment précis, éliminant ainsi l'attente angoissante pour le client."
     }
-  }[activeTab];
+  }[activeIndustry];
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(content.question);
+    navigator.clipboard.writeText(pageData.question);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -84,7 +87,7 @@ export const Sandbox: React.FC = () => {
     script.onload = () => {
       if (window.voiceflow && window.voiceflow.chat) {
         window.voiceflow.chat.load({
-          verify: { projectID: '69f8ba943ee4fb7bf5d64a8f' },
+          verify: { projectID: pageData.projectId },
           url: 'https://general-runtime.voiceflow.com',
           versionID: 'production',
           voice: {
@@ -125,12 +128,12 @@ export const Sandbox: React.FC = () => {
         }
       }
     };
-  }, []);
+  }, [pageData.projectId]); // Re-load if the project ID changes
 
   return (
     <>
       <Helmet>
-        <title>Sandbox | {content.clientName}</title>
+        <title>Sandbox | {pageData.clientTitle}</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
@@ -163,53 +166,16 @@ export const Sandbox: React.FC = () => {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                 </span>
                 <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em]">
-                  Environnement de test : {content.clientName}
+                  Environnement de test : {pageData.clientTitle}
                 </span>
               </div>
 
-              {/* Industry Switcher Tabs */}
-              <div className="flex flex-col md:flex-row p-1 bg-black/40 border border-white/10 rounded-2xl mb-8 max-w-2xl mx-auto gap-1 md:gap-0">
-                <button
-                  onClick={() => setActiveTab('dentaire')}
-                  className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl text-[10px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
-                    activeTab === 'dentaire'
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <Activity className="w-4 h-4 flex-shrink-0" />
-                  <span>Clinique Dentaire</span>
-                </button>
-                <button
-                  onClick={() => setActiveTab('concessionnaire')}
-                  className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl text-[10px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
-                    activeTab === 'concessionnaire'
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <Car className="w-4 h-4 flex-shrink-0" />
-                  <span>Concessionnaire Auto</span>
-                </button>
-                <button
-                  onClick={() => setActiveTab('hvac')}
-                  className={`flex-1 flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl text-[10px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
-                    activeTab === 'hvac'
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <Flame className="w-4 h-4 flex-shrink-0" />
-                  <span>CVC / Thermopompe</span>
-                </button>
-              </div>
-
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
-                {content.clientName}
+                {pageData.clientTitle}
               </h1>
 
-              <p className="text-zinc-400 text-lg mb-10 leading-relaxed font-light">
-                {content.intro}
+              <p className="text-zinc-400 text-lg mb-10 leading-relaxed font-light font-sans">
+                {pageData.intro}
               </p>
 
               {/* Steps */}
@@ -244,7 +210,7 @@ export const Sandbox: React.FC = () => {
                     <div className="relative group/copy">
                       <div className="bg-black/40 border border-white/10 rounded-2xl p-4 pr-16 transition-all duration-300 group-hover/copy:border-blue-500/30 shadow-inner min-h-[4rem] flex items-center">
                         <code className="text-sm text-zinc-300 block leading-relaxed italic">
-                          "{content.question}"
+                          "{pageData.question}"
                         </code>
                       </div>
                       
@@ -279,7 +245,7 @@ export const Sandbox: React.FC = () => {
                       Jouez le jeu
                       <Zap className="w-4 h-4 ml-2 text-zinc-500" />
                     </h3>
-                    <p className="text-zinc-500 text-sm">{content.step3}</p>
+                    <p className="text-zinc-500 text-sm">{pageData.step3}</p>
                   </div>
                 </div>
               </div>
@@ -292,7 +258,7 @@ export const Sandbox: React.FC = () => {
                 <div className="relative z-10">
                   <h4 className="text-blue-400 font-bold text-sm uppercase tracking-[0.2em] mb-4">Ce qu'il faut observer :</h4>
                   <p className="text-zinc-400 text-sm leading-relaxed font-light">
-                    {content.observation}
+                    {pageData.observation}
                   </p>
                 </div>
               </div>
