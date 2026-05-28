@@ -18,6 +18,9 @@ export const VoiceflowWidget = () => {
         versionID: 'production',
         voice: {
           url: "https://runtime-api.voiceflow.com"
+        },
+        assistant: {
+          stylesheet: '/voiceflow.css'
         }
       });
     };

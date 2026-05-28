@@ -24,15 +24,11 @@ function AppContent() {
 
   return (
     <div className="min-h-screen overflow-x-hidden w-full max-w-full">
-      {!isSandbox && (
-        <>
-          <Navbar
-            isConsultationOpen={isConsultationOpen}
-            onConsultationToggle={setIsConsultationOpen}
-          />
-          <VoiceflowWidget />
-        </>
-      )}
+      <Navbar
+        isConsultationOpen={isConsultationOpen}
+        onConsultationToggle={setIsConsultationOpen}
+      />
+      {!isSandbox && <VoiceflowWidget />}
       <div className="w-full max-w-full overflow-x-hidden">
         <Routes>
             <Route path="/" element={

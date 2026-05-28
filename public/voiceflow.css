@@ -1,0 +1,31 @@
+/* Voiceflow Chat Widget Custom Stylesheet */
+
+/* Make the launcher (chat bubble) bigger and shift it to the left and up */
+.vfrc-launcher {
+  width: 72px !important;
+  height: 72px !important;
+  right: 60px !important;
+  bottom: 30px !important;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Adjust size of the chat icon inside the bubble */
+.vfrc-launcher .vfrc-icon {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+/* Smooth hover scaling effect for a premium interactive feel */
+.vfrc-launcher:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Reposition the chat window (widget) to align perfectly with the shifted launcher */
+.vfrc-widget {
+  right: 60px !important;
+  bottom: 110px !important; /* Spaced cleanly above the larger, shifted launcher */
+  transition: right 0.25s ease, bottom 0.25s ease !important;
+}
+
