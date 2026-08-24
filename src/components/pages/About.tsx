@@ -1,127 +1,195 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { Bot, Users, Award, Globe, Lightbulb, Heart, MapPin } from 'lucide-react';
+import { Users, Lightbulb, Heart, MapPin, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { AutomationFlow } from '../icons/BrandIcons';
+
+const values = [
+  {
+    icon: <Lightbulb className="h-6 w-6" />,
+    title: 'Innovation',
+    description:
+      "On ne se contente pas de suivre les tendances — on construit des solutions qui n'existaient pas hier.",
+  },
+  {
+    icon: <Heart className="h-6 w-6" />,
+    title: 'Excellence',
+    description:
+      'Chaque agent, chaque intégration est conçue avec une rigueur qui fait la différence sur le terrain.',
+  },
+  {
+    icon: <Users className="h-6 w-6" />,
+    title: 'Collaboration',
+    description:
+      "On ne livre pas un produit puis on disparaît. On travaille avec vous, dans vos outils, à votre rythme.",
+  },
+  {
+    icon: <MapPin className="h-6 w-6" />,
+    title: 'Ancrage local',
+    description:
+      'Basés au Québec, on connaît le marché, la réglementation et les défis — et les opportunités — de la province.',
+  },
+];
 
 export const About: React.FC = () => {
-  const stats = [
-    { number: "500+", label: "Entreprises Transformées" },
-    { number: "10M+", label: "Tâches Automatisées" },
-    { number: "99.9%", label: "Temps de Disponibilité" },
-    { number: "24/7", label: "Support Expert" }
-  ];
-
-  const values = [
-    {
-      icon: <Lightbulb className="h-8 w-8" />,
-      title: "Innovation",
-      description: "Nous repoussons constamment les limites de ce qui est possible avec l'IA"
-    },
-    {
-      icon: <Heart className="h-8 w-8" />,
-      title: "Excellence",
-      description: "Chaque solution est conçue avec une attention méticuleuse aux détails"
-    },
-    {
-      icon: <Users className="h-8 w-8" />,
-      title: "Collaboration",
-      description: "Nous travaillons main dans la main avec nos clients pour leur succès"
-    },
-    {
-      icon: <Globe className="h-8 w-8" />,
-      title: "Impact Global",
-      description: "Notre mission est de démocratiser l'accès à l'intelligence artificielle"
-    }
-  ];
-
   return (
     <>
       <Helmet>
-        <title>À Propos d'AIXPT - Automatisation IA au Québec</title>
-        <meta name="description" content="Découvrez AIXPT, pionniers de l'automatisation intelligente basés au Québec. Nos solutions IA transforment les entreprises avec innovation et excellence." />
-        <meta name="keywords" content="AIXPT, automatisation IA, Québec, intelligence artificielle, PME Québec" />
+        <title>À Propos d'AIXPT — Automatisation IA, Québec</title>
+        <meta
+          name="description"
+          content="AIXPT automatise les appels, emails et sites web des PME du Québec avec des agents IA — sans être un géant de la tech."
+        />
+        <meta
+          name="keywords"
+          content="AIXPT, automatisation IA, Québec, intelligence artificielle, PME Québec"
+        />
       </Helmet>
-      <div className="min-h-screen bg-black text-white pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div className="min-h-screen bg-background pb-16 pt-24 text-foreground">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-16 text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              <span className="text-white">À Propos d'</span>
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                AIXPT - Québec
+            <div className="mb-4 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-brand/70" />
+              <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                À propos
               </span>
+              <span className="h-px w-8 bg-brand/70" />
+            </div>
+            <h1 className="font-display text-4xl font-semibold tracking-[-0.02em] md:text-6xl">
+              <span className="text-white">On rend l'IA </span>
+              <span className="text-brand">accessible</span>
+              <br />
+              <span className="text-white">aux entreprises d'ici.</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Pionniers de l'automatisation intelligente basés au Québec, nous façonnons l'avenir du travail 
-              en rendant l'intelligence artificielle accessible à toutes les entreprises.
+            <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+              AIXPT est né d'un constat simple : l'automatisation ne devrait pas être
+              réservée aux grandes entreprises. On crée des agents IA qui travaillent
+              pour les PME du Québec — 24 h/24, sans complexité inutile.
             </p>
           </motion.div>
 
-          {/* Mission Statement */}
+          {/* Mission */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30 rounded-lg p-8 mb-16"
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mb-16 overflow-hidden rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/15 via-[#7a4bff]/5 to-transparent p-8 text-center md:p-12"
           >
-            <div className="flex items-center justify-center mb-6">
-              <Bot className="h-16 w-16 text-blue-400" />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-20 rounded-full bg-brand/5 blur-[120px]"
+            />
+            <div className="relative z-10">
+              <span className="mx-auto mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                <AutomationFlow className="h-7 w-7" />
+              </span>
+              <h2 className="font-display text-3xl font-semibold tracking-[-0.01em] text-white">
+                Notre mission
+              </h2>
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                On croit qu'un cabinet comptable, une clinique dentaire ou un hôtel
+                méritent les mêmes outils qu'une multinationale. Notre mission :
+                déployer des agents IA qui répondent aux appels, trient les emails,
+                qualifient les prospects et mettent à jour vos systèmes — sans que
+                vous ayez à embaucher une équipe technique.
+              </p>
             </div>
-            <h2 className="text-3xl font-bold text-center text-white mb-6">Notre Mission</h2>
-            <p className="text-lg text-gray-300 text-center leading-relaxed max-w-4xl mx-auto">
-              Chez AIXPT, nous croyons que l'intelligence artificielle ne devrait pas être réservée 
-              aux géants technologiques. Notre mission est de démocratiser l'IA en créant des solutions 
-              d'automatisation intelligentes qui permettent à chaque entreprise, quelle que soit sa taille, 
-              de prospérer dans l'économie numérique.
-            </p>
           </motion.div>
 
           {/* Values */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="mb-16"
           >
-            <h2 className="text-3xl font-bold text-center text-white mb-12">Nos Valeurs</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="mb-8 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-brand/70" />
+              <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                Nos valeurs
+              </span>
+              <span className="h-px w-8 bg-brand/70" />
+            </div>
+
+            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
               {values.map((value, index) => (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                  className="bg-gray-900/50 backdrop-blur-sm border border-blue-500/20 rounded-lg p-6 hover:border-blue-400/40 transition-all duration-300"
+                  key={value.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.35 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className="group rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
                 >
-                  <div className="text-blue-400 mb-4">{value.icon}</div>
-                  <h3 className="text-xl font-semibold text-white mb-3">{value.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{value.description}</p>
+                  <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                    {value.icon}
+                  </span>
+                  <h3 className="text-lg font-semibold text-white">{value.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                    {value.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* Québec Location Section */}
+          {/* Location */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="bg-gradient-to-r from-green-600/20 to-blue-600/20 border border-green-500/30 rounded-lg p-8 mb-16 text-center"
+            transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mb-16 overflow-hidden rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/15 via-[#7a4bff]/5 to-transparent p-8 text-center md:p-12"
           >
-            <div className="flex items-center justify-center mb-6">
-              <MapPin className="h-16 w-16 text-green-400" />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-20 rounded-full bg-brand/5 blur-[120px]"
+            />
+            <div className="relative z-10">
+              <span className="mx-auto mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                <MapPin className="h-7 w-7" />
+              </span>
+              <h2 className="font-display text-3xl font-semibold tracking-[-0.01em] text-white">
+                Basés au Québec
+              </h2>
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                On est fiers d'opérer depuis la province de Québec — de Montréal
+                à Québec. Cette proximité nous permet de comprendre les réalités
+                des entreprises d'ici : la réglementation, le marché local, le
+                tissu économique régional. Nos solutions sont pensées pour les PME
+                québécoises, avec un service en français.
+              </p>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-6">Basés au Québec</h2>
-            <p className="text-lg text-gray-300 leading-relaxed max-w-4xl mx-auto">
-              AIXPT est fièrement basé dans la province de Québec, au cœur du Canada. 
-              De Montréal à Québec, nous tirons notre inspiration de l'innovation et de la culture technologique florissante de cette région, 
-              permettant à nos solutions IA d'être parfaitement adaptées aux entreprises d'ici et d'ailleurs.
-            </p>
+          </motion.div>
+
+          {/* Final CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center"
+          >
+            <div className="mx-auto max-w-xl rounded-xl border border-white/10 bg-card/70 p-8">
+              <h3 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white">
+                Prêt à automatiser sans sacrifier la qualité ?
+              </h3>
+              <p className="mb-6 mt-3 text-muted-foreground">
+                On commence par un appel gratuit. Pas de contrat, pas d'engagement.
+              </p>
+              <Link
+                to="/contact"
+                className="group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-8 text-base font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_10px_30px_rgba(154,107,255,0.35)]"
+              >
+                Nous contacter{' '}
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>

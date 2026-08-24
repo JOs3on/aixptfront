@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, ArrowRight, Cpu, Brain } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '../ui/button';
-import { MatrixRain } from '../effects/MatrixRain';
-import { AnimatedTextCycle } from '../effects/AnimatedTextCycle';
+import { ArrowRight } from 'lucide-react';
+import { AutomationFlow, OrbitCoverage, IntegrationNodes } from '../icons/BrandIcons';
+import { Link } from 'react-router-dom';
+import { CinematicHero } from './CinematicHero';
+import PhoneAgentSection from './PhoneAgentSection';
 import PossibleIntegrations from './PossibleIntegrations';
 import UseCasesSection from './UseCasesSection';
+import HowItWorksSection from './HowItWorksSection';
+import FAQSection from './FAQSection';
 
 interface AIXPTHeroProps {
   title?: string;
@@ -15,164 +17,252 @@ interface AIXPTHeroProps {
   onOpenConsultation?: () => void;
 }
 
+const DEFAULT_TITLE = "L'IA qui travaille pendant que vous dormez.";
+const ACCENT_PHRASE = 'travaille pendant que vous dormez';
+
+const pains = [
+  {
+    title:
+      "Vos appels manqués deviennent des rendez-vous chez le concurrent.",
+    description:
+      "Chaque appel sans réponse est un client qui appelle ailleurs — et qui n'appelle presque jamais deux fois.",
+  },
+  {
+    title: "Vos suivis s'éteignent dans l'oubli.",
+    description:
+      "Sans relance automatique, la majorité des prospects n'obtiennent jamais de réponse. Une demande sur deux se perd dans les 24 heures.",
+  },
+  {
+    title: 'Vos équipes croulent sous les tâches répétitives.',
+    description:
+      "Saisies, rappels, classement : des heures englouties chaque semaine — pendant que vos concurrents automatisent.",
+  },
+];
+
 export const AIXPTHero: React.FC<AIXPTHeroProps> = ({
-  title = "L'automatisation IA qui propulse vos affaires.",
-  subtitle = "Transformez votre entreprise avec des solutions d'automatisation IA de pointe qui évoluent avec vos ambitions",
-  ctaText = "Commencer Votre Voyage IA",
-  onOpenConsultation = () => console.log("Open consultation")
+  title = DEFAULT_TITLE,
+  subtitle = 'Récupérez vos leads perdus, répondez aux appels 24/7 et synchronisez tous vos systèmes — avec des agents IA qui travaillent pour vous, sans lever le petit doigt.',
+  ctaText = 'Réserver une consultation',
+  onOpenConsultation = () => console.log('Open consultation'),
 }) => {
-  const navigate = useNavigate();
-  const automationWords = [
-    "l'IA Automatisée",
-    "l'Apprentissage Machine",
-    "les Réseaux Neuronaux",
-    "les Systèmes Intelligents",
-    "l'Intelligence Digitale",
-    "l'Informatique Cognitive"
+  const features = [
+    {
+      icon: <AutomationFlow className="h-8 w-8" />,
+      title: 'Automatisation Intelligente',
+      description:
+        "Déployez des agents IA qui apprennent et s'adaptent à vos processus métier",
+    },
+    {
+      icon: <OrbitCoverage className="h-8 w-8" />,
+      title: 'Réponse 24/7',
+      description:
+        'Chaque appel, chaque message — traité instantanément, même quand vos bureaux sont fermés',
+    },
+    {
+      icon: <IntegrationNodes className="h-8 w-8" />,
+      title: 'Intégration Transparente',
+      description:
+        'Connectez-vous sans effort à vos outils et workflows existants',
+    },
   ];
 
+  const [featureA, featureB, featureC] = features;
+
   return (
-    <div className="relative min-h-screen w-full max-w-full overflow-hidden bg-black">
-      {/* Matrix Rain Background */}
-      <MatrixRain
-        fontSize={16}
-        color="#0066ff"
-        characters="01AIXPT"
-        fadeOpacity={0.05}
-        speed={0.8}
+    <div className="relative w-full bg-background text-foreground">
+      <CinematicHero
+        headline={title}
+        accent={ACCENT_PHRASE}
+        subtitle={subtitle}
+        ctaText={ctaText}
+        onOpenConsultation={onOpenConsultation}
       />
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-blue-950/60 to-black/90 z-10" />
+      <div className="relative z-10">
+        {/* Social proof — integrations marquee (anatomy slot #2, right after hero) */}
+        <PossibleIntegrations />
 
-      {/* Content */}
-      <div className="relative z-20 flex min-h-screen items-center justify-center px-4 pt-32 w-full max-w-full">
-        <div className="max-w-6xl mx-auto text-center w-full">
+        {/* Product proof — live AI call phone mockup */}
+        <PhoneAgentSection />
 
-          {/* AIXPT Logo/Brand - Keep spacing only */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-8"
-          >
-            {/* Content removed, spacing preserved */}
-          </motion.div>
-
-          {/* Main Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8"
-          >
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight px-2 break-words max-w-full">
-              {title}
-              <br />
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent break-words">
-                <AnimatedTextCycle
-                  words={automationWords}
-                  interval={3000}
-                  className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl"
-                />
-              </span>
-            </h1>
-          </motion.div>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed px-4 break-words"
-          >
-            {subtitle}
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
-            className="flex justify-center items-center mb-16 px-4"
-          >
-            <Button
-              onClick={() => navigate('/services')}
-              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-4 sm:px-6 md:px-8 py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/25"
+        {/* Pain section — le coût de l'attente (agitation before the pitch) */}
+        <section className="relative border-y border-white/5 bg-[#0d0d10] py-20 md:py-28">
+          <div className="mx-auto w-full max-w-5xl px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="mx-auto max-w-2xl text-center"
             >
-              <Zap className="mr-2 h-4 w-4 md:h-5 md:w-5" />
-              <span className="text-sm sm:text-base md:text-lg">{ctaText}</span>
-              <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
-            </Button>
+              <div className="mb-4 flex items-center justify-center gap-3">
+                <span className="h-px w-8 bg-brand/70" />
+                <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                  Le coût de l'attente
+                </span>
+                <span className="h-px w-8 bg-brand/70" />
+              </div>
+              <h2 className="font-display text-3xl font-semibold tracking-[-0.02em] text-white md:text-5xl">
+                Sans automatisation, chaque opportunité{' '}
+                <span className="text-brand">s'échappe</span>.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                Trois fuites silencieuses qui coûtent plus cher que vous ne le
+                croyez.
+              </p>
+            </motion.div>
+
+            <div className="mt-14 space-y-14 md:mt-20 md:space-y-20">
+              {pains.map((pain, index) => (
+                <motion.div
+                  key={pain.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: index * 0.08,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="grid grid-cols-1 items-baseline gap-4 md:grid-cols-[64px_1fr_1.4fr] md:gap-10"
+                >
+                  <span className="font-sans text-sm font-semibold tracking-[0.08em] text-brand/80">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="font-display text-xl font-semibold leading-snug tracking-[-0.01em] text-white md:text-2xl">
+                    {pain.title}
+                  </h3>
+                  <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                    {pain.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7 }}
+              className="mt-16 text-center md:mt-20"
+            >
+              <Link
+                to="/services"
+                className="group inline-flex items-center gap-2 text-base font-medium text-foreground/80 transition-colors duration-300 hover:text-white"
+              >
+                <span className="relative">
+                  Voir comment on automatise
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-brand transition-transform duration-300 ease-out group-hover:scale-x-100"
+                  />
+                </span>
+                <ArrowRight className="h-4 w-4 text-brand transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Value proposition cards — benefits */}
+        <section className="relative mx-auto w-full max-w-6xl px-4 py-20 md:py-28">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-2xl"
+          >
+            <div className="mb-4 flex items-center gap-3">
+              <span className="h-px w-8 bg-brand/70" />
+              <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+                Pourquoi AIXPT
+              </span>
+            </div>
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.02em] text-white md:text-5xl">
+              Vos opérations, amplifiées par l'IA.
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              Des agents qui répondent, analysent et exécutent — reliés à vos
+              outils existants, jour et nuit.
+            </p>
           </motion.div>
 
-          {/* Feature Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto px-4 w-full"
-          >
-            {[
-              {
-                icon: <Brain className="h-8 w-8" />,
-                title: "Automatisation Intelligente",
-                description: "Déployez des agents IA qui apprennent et s'adaptent à vos processus métier"
-              },
-              {
-                icon: <Zap className="h-8 w-8" />,
-                title: "Vitesse Fulgurante",
-                description: "Traitez des milliers de tâches en quelques secondes avec notre moteur IA optimisé"
-              },
-              {
-                icon: <Cpu className="h-8 w-8" />,
-                title: "Intégration Transparente",
-                description: "Connectez-vous sans effort à vos outils et workflows existants"
-              }
-            ].map((feature, index) => (
+          <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {[featureA, featureB].map((feature, index) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.6 + index * 0.2 }}
-                className="bg-gray-900/50 backdrop-blur-sm border border-blue-500/20 rounded-lg p-4 md:p-6 hover:border-blue-400/40 transition-colors duration-300"
+                key={feature.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{
+                  duration: 0.7,
+                  delay: index * 0.1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="group rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card md:p-8"
               >
-                <div className="text-blue-400 mb-3 md:mb-4">{feature.icon}</div>
-                <h3 className="text-lg md:text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                <p className="text-sm md:text-base text-gray-400">{feature.description}</p>
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                  {feature.icon}
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-white md:text-xl">
+                  {feature.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
-          </motion.div>
 
-          {/* Possible Integrations Carousel */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.8 }}
-            className="my-12 md:my-16"
-          >
-            <h3 className="text-xl md:text-2xl font-semibold text-center text-white mb-6 md:mb-8 px-4">
-              Intégrations Possibles
-            </h3>
-            <PossibleIntegrations />
-          </motion.div>
+            {/* Wide integration card — asymmetric, breaks the uniform 3-grid */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="group rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card md:col-span-2 md:flex md:items-center md:gap-10 md:p-8"
+            >
+              <div className="mb-5 flex-shrink-0 md:mb-0">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                  {featureC.icon}
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="mb-2 text-lg font-semibold text-white md:text-xl">
+                  {featureC.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {featureC.description}
+                </p>
+              </div>
+              {/* Static connector — vos outils → agents AIXPT → vos systèmes */}
+              <div aria-hidden="true" className="hidden items-center gap-3 xl:flex">
+                <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-medium uppercase tracking-wide text-foreground/70">
+                  Vos outils
+                </span>
+                <span className="h-px w-10 bg-brand/50" />
+                <span className="rounded-full border border-brand/30 bg-brand/10 px-4 py-2 text-[11px] font-medium uppercase tracking-wide text-brand">
+                  Agents AIXPT
+                </span>
+                <span className="h-px w-10 bg-brand/50" />
+                <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-medium uppercase tracking-wide text-foreground/70">
+                  Vos systèmes
+                </span>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-          {/* Use Cases Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.0 }}
-            className="my-12 md:my-20"
-          >
-            <UseCasesSection onOpenConsultation={onOpenConsultation} />
-          </motion.div>
+        {/* How it works — 3-step process */}
+        <HowItWorksSection />
 
+        {/* FAQ — objection handling before the final CTA */}
+        <FAQSection />
 
-        </div>
+        {/* Use cases + final CTA */}
+        <UseCasesSection onOpenConsultation={onOpenConsultation} />
       </div>
-
-      {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-10" />
     </div>
   );
 };
+
+export default AIXPTHero;

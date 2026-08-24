@@ -18,7 +18,7 @@ const ReflectShowcase: React.FC = () => {
     const toggleState = () => setIsActive(!isActive);
 
     return (
-        <div className="w-full max-w-6xl mx-auto px-4 py-16 flex flex-col items-center gap-12 font-sans overflow-hidden">
+        <div className="w-full max-w-6xl mx-auto px-4 py-16 flex flex-col items-center gap-12 font-sans overflow-hidden bg-[#fafafa]">
 
             {/* 1. HEADER SECTION */}
             <div className="text-center space-y-4">

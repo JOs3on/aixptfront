@@ -8,7 +8,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom dark variant for targeting dark mode elements */
+/* Tailwind 4 @theme block below is inert under Tailwind 3 (see package.json).
+   The real theme tokens live in :root/.dark below + tailwind.config.js. */
+
+/* Custom dark variant (Tailwind 4 syntax — inert under Tailwind 3, kept for future migration) */
 @custom-variant dark (&:is(.dark *));
 
 /* CSS variables and theme definitions */
@@ -50,114 +53,132 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Light theme variables */
+/* AIXPT design tokens — dark, premium AI-lab */
+/* Single accent: electric violet #9A6BFF · Surfaces: near-black layered */
+/* Note: font stacks are defined in tailwind.config.js (fontFamily) — font-sans / font-display / font-mono utilities. */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+
+  --background: #0a0a0c;
+  --foreground: #ededef;
+  --card: #1a1a1e;
+  --card-foreground: #ededef;
+  --popover: #121214;
+  --popover-foreground: #ededef;
+  --primary: #9a6bff;
+  --primary-foreground: #ffffff;
+  --secondary: #121214;
+  --secondary-foreground: #ededef;
+  --muted: #1a1a1e;
+  --muted-foreground: #9a9aa3;
+  --accent: rgba(154, 107, 255, 0.14);
+  --accent-foreground: #ededef;
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #9a6bff;
+  --chart-1: #9a6bff;
+  --chart-2: #00d9f5;
+  --chart-3: #8a5cef;
+  --chart-4: #6ee7b7;
+  --chart-5: #f5a623;
+  --sidebar: #121214;
+  --sidebar-foreground: #ededef;
+  --sidebar-primary: #9a6bff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(154, 107, 255, 0.14);
+  --sidebar-accent-foreground: #ededef;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #9a6bff;
 }
 
-/* Dark theme variables */
+/* Dark variant — same tokens (html carries .dark so `dark:` variants resolve) */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #0a0a0c;
+  --foreground: #ededef;
+  --card: #1a1a1e;
+  --card-foreground: #ededef;
+  --popover: #121214;
+  --popover-foreground: #ededef;
+  --primary: #9a6bff;
+  --primary-foreground: #ffffff;
+  --secondary: #121214;
+  --secondary-foreground: #ededef;
+  --muted: #1a1a1e;
+  --muted-foreground: #9a9aa3;
+  --accent: rgba(154, 107, 255, 0.14);
+  --accent-foreground: #ededef;
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #9a6bff;
+  --chart-1: #9a6bff;
+  --chart-2: #00d9f5;
+  --chart-3: #8a5cef;
+  --chart-4: #6ee7b7;
+  --chart-5: #f5a623;
+  --sidebar: #121214;
+  --sidebar-foreground: #ededef;
+  --sidebar-primary: #9a6bff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(154, 107, 255, 0.14);
+  --sidebar-accent-foreground: #ededef;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #9a6bff;
 }
 
 /* Tailwind base styles */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+    outline-color: var(--ring);
   }
   html,
   body {
-    overflow-x: hidden;
+    /* clip (not hidden): prevents horizontal scroll WITHOUT turning these into
+       scroll containers — `overflow-x: hidden` would compute overflow-y to auto
+       and break every position: sticky (incl. the cinematic hero pin). */
+    overflow-x: clip;
     width: 100%;
     max-width: 100vw;
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
   }
   #root {
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
   }
-}
-
-/* Marquee animation for integrations carousel */
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 20s linear infinite;
-}
-
-/* Pause on hover */
-.animate-marquee:hover {
-  animation-play-state: paused;
 }
 
 .drop-shadow-glow {
   filter: drop-shadow(0 0 10px rgba(165, 175, 230, 0.8));
+}
+
+/* Infinite logo marquee — seamless scroll, pauses on hover.
+   The track is duplicated in JSX; -50% loops seamlessly. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Subtle film grain overlay — used on the cinematic hero */
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
 }

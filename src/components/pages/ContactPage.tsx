@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { Mail, Phone, ArrowRight, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Mail, Phone, ArrowRight, CheckCircle, MessageSquareText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -18,7 +18,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenConsultation }) 
     adresseCourriel: '',
     nomEntreprise: '',
     problemes: '',
-    informationsSupplementaires: ''
+    informationsSupplementaires: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,16 +32,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenConsultation }) 
     try {
       const response = await fetch(import.meta.env.VITE_MAKE_WEBHOOK_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         setShowSuccess(true);
       } else {
-        console.error('Erreur lors de l\'envoi');
+        console.error("Erreur lors de l'envoi");
       }
     } catch (error) {
       console.error('Erreur:', error);
@@ -51,245 +49,300 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenConsultation }) 
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
-    <div className="min-h-screen bg-black py-16 px-4">
+    <div className="min-h-screen bg-background pb-16 pt-24 text-foreground">
       <Helmet>
-        <title>Contactez AIXPT - Services IA et Automatisation au Québec</title>
-        <meta name="description" content="Contactez AIXPT au Québec pour des solutions d'automatisation IA et services intelligents. Obtenez une consultation gratuite avec notre équipe basée à Montréal." />
-        <meta name="keywords" content="contact AIXPT, IA Québec, automatisation entreprise, services IA Montréal, consultation IA, support AIXPT" />
+        <title>Contactez AIXPT — Automatisation IA, Québec</title>
+        <meta
+          name="description"
+          content="Contactez AIXPT au Québec pour l'automatisation IA : assistant vocal, emails, chatbots et création de sites web. Parlez à notre équipe."
+        />
+        <meta
+          name="keywords"
+          content="contact AIXPT, IA Québec, automatisation entreprise, services IA Montréal, consultation IA"
+        />
       </Helmet>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-6xl mx-auto"
-      >
-        {/* Hero/Intro Section */}
-        <section className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Contactez AIXPT au Québec - Services IA
+
+      <div className="mx-auto max-w-6xl px-4">
+        {/* Hero / Intro */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16 text-center"
+        >
+          <div className="mb-4 flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-brand/70" />
+            <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+              Nous contacter
+            </span>
+            <span className="h-px w-8 bg-brand/70" />
+          </div>
+          <h1 className="font-display text-4xl font-semibold tracking-[-0.02em] text-white md:text-6xl">
+            Parlons de votre{' '}
+            <span className="text-brand">projet IA</span>
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
-            Prêt à transformer votre entreprise avec l&apos;IA ? Discutons de vos besoins.
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+            Que vous vouliez automatiser vos appels, vos emails ou votre site web,
+            on vous écoute — sans engagement.
           </p>
-          <Button onClick={onOpenConsultation} className="mt-8">
-            Planifier une Consultation
+          <Button
+            onClick={onOpenConsultation}
+            className="mt-8 h-12 rounded-full bg-brand px-8 text-base font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_10px_30px_rgba(154,107,255,0.35)]"
+          >
+            <MessageSquareText className="mr-2 h-4 w-4" />
+            Réserver une consultation
           </Button>
-        </section>
+        </motion.div>
 
-        {/* Contact Details Section */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-8 text-center">
-            Détails de Contact
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="text-center p-6 bg-gray-900 border border-gray-700 rounded-lg">
-              <Mail className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">Email Principal</h3>
-              <a href="mailto:jarias@aixpt.ca" className="text-blue-400 hover:text-blue-300 block text-sm">
-                jarias@aixpt.ca
-              </a>
-            </div>
-            <div className="text-center p-6 bg-gray-900 border border-gray-700 rounded-lg">
-              <Phone className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">Téléphone</h3>
-              <a href="tel:4188005085" className="text-blue-400 hover:text-blue-300 block text-sm">
-                418-800-5085
-              </a>
-            </div>
-            <div className="text-center p-6 bg-gray-900 border border-gray-700 rounded-lg">
-              <Mail className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">Support Email</h3>
-              <a href="mailto:support@aixpt.ca" className="text-blue-400 hover:text-blue-300 block text-sm">
-                support@aixpt.ca
-              </a>
-            </div>
+        {/* Contact Details */}
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16"
+        >
+          <div className="mb-8 flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-brand/70" />
+            <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+              Coordonnées
+            </span>
+            <span className="h-px w-8 bg-brand/70" />
           </div>
-        </section>
 
-        {/* Related Services Section */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-8 text-center">
-            Services Liés
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="bg-gray-900 border border-gray-700 rounded-lg p-6 text-center"
-            >
-              <h3 className="text-xl font-semibold text-white mb-4">
-                Création de Sites Web
-              </h3>
-              <p className="text-gray-300 mb-4">
-                Sites web modernes et performants optimisés pour l'IA.
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => navigate('/creation-sites-web')}
-                className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-3">
+            {[
+              {
+                icon: <Mail className="h-8 w-8" />,
+                title: 'Courriel principal',
+                value: 'jarias@aixpt.ca',
+                href: 'mailto:jarias@aixpt.ca',
+              },
+              {
+                icon: <Phone className="h-8 w-8" />,
+                title: 'Téléphone',
+                value: '418-800-5085',
+                href: 'tel:4188005085',
+              },
+              {
+                icon: <Mail className="h-8 w-8" />,
+                title: 'Support',
+                value: 'support@aixpt.ca',
+                href: 'mailto:support@aixpt.ca',
+              },
+            ].map((item, i) => (
+              <motion.a
+                key={item.title}
+                href={item.href}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="group rounded-xl border border-white/10 bg-card/70 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
               >
-                En Savoir Plus <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="bg-gray-900 border border-gray-700 rounded-lg p-6 text-center"
-            >
-              <h3 className="text-xl font-semibold text-white mb-4">
-                Assistant Vocal
-              </h3>
-              <p className="text-gray-300 mb-4">
-                Intégrez un assistant vocal intelligent à votre entreprise.
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => navigate('/assistant-vocal')}
-                className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
-              >
-                En Savoir Plus <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="bg-gray-900 border border-gray-700 rounded-lg p-6 text-center"
-            >
-              <h3 className="text-xl font-semibold text-white mb-4">
-                Agents Conversationnels
-              </h3>
-              <p className="text-gray-300 mb-4">
-                Chatbots IA pour améliorer l'expérience client.
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => navigate('/agents-conversationnels')}
-                className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
-              >
-                En Savoir Plus <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </motion.div>
+                <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                  {item.icon}
+                </span>
+                <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                <p className="mt-1.5 text-sm text-brand transition-colors duration-300 group-hover:text-brand-hover">
+                  {item.value}
+                </p>
+              </motion.a>
+            ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* Contact Form Section */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-8 text-center">
-            Formulaire de Contact
-          </h2>
+        {/* Services */}
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16"
+        >
+          <div className="mb-8 flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-brand/70" />
+            <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+              Nos services
+            </span>
+            <span className="h-px w-8 bg-brand/70" />
+          </div>
+
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-3">
+            {[
+              {
+                title: 'Création de Sites Web',
+                desc: 'Sites modernes optimisés SEO et GEO — un site qu\'on trouve.',
+                to: '/creation-sites-web',
+              },
+              {
+                title: 'Assistant Vocal IA',
+                desc: "Répondez aux appels 24/7 avec un agent qui qualifie et réserve.",
+                to: '/assistant-vocal',
+              },
+              {
+                title: 'Agents Conversationnels',
+                desc: "Chatbots IA pour qualifier, conseiller et convertir vos visiteurs.",
+                to: '/agents-conversationnels',
+              },
+            ].map((svc, i) => (
+              <motion.div
+                key={svc.title}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="group cursor-pointer rounded-xl border border-white/10 bg-card/70 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
+                onClick={() => navigate(svc.to)}
+              >
+                <h3 className="text-lg font-semibold text-white">{svc.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {svc.desc}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-brand transition-all duration-300 group-hover:gap-2">
+                  En savoir plus <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Contact Form */}
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16"
+        >
+          <div className="mb-8 flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-brand/70" />
+            <span className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-brand">
+              Formulaire
+            </span>
+            <span className="h-px w-8 bg-brand/70" />
+          </div>
+
           {showSuccess ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center space-y-6 py-8 bg-gray-900 rounded-lg p-8 max-w-md mx-auto"
+              className="mx-auto max-w-md rounded-xl border border-white/10 bg-card/70 p-8 text-center"
             >
-              <CheckCircle className="h-16 w-16 text-green-400 mx-auto" />
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  Votre demande a été envoyée avec succès !
-                </h3>
-                <p className="text-gray-300 mb-4">
-                  Vous serez contacté(e) dans un délai de 24-48 heures.
-                </p>
-                <p className="text-sm text-gray-400 mb-6">
-                  Pour les affaires urgentes, veuillez écrire à <a href="mailto:jarias@aixpt.ca" className="text-blue-400 hover:underline">jarias@aixpt.ca</a> ou appeler au 418-800-5085.
-                </p>
-                <Button
-                  onClick={() => {
-                    setShowSuccess(false);
-                    setFormData({
-                      nomComplet: '',
-                      adresseCourriel: '',
-                      nomEntreprise: '',
-                      problemes: '',
-                      informationsSupplementaires: ''
-                    });
-                  }}
-                  className="bg-green-600 hover:bg-green-700"
+              <CheckCircle className="mx-auto mb-4 h-16 w-16 text-emerald-400" />
+              <h3 className="font-display text-xl font-semibold text-white">
+                Votre demande a bien été envoyée.
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Notre équipe vous répond sous 24–48 heures. Pour une urgence,
+                écrivez à{' '}
+                <a
+                  href="mailto:jarias@aixpt.ca"
+                  className="text-brand underline transition-colors hover:text-brand-hover"
                 >
-                  Envoyer un autre message
-                </Button>
-              </div>
+                  jarias@aixpt.ca
+                </a>{' '}
+                ou appelez au{' '}
+                <a
+                  href="tel:4188005085"
+                  className="text-brand underline transition-colors hover:text-brand-hover"
+                >
+                  418-800-5085
+                </a>
+                .
+              </p>
+              <Button
+                onClick={() => {
+                  setShowSuccess(false);
+                  setFormData({
+                    nomComplet: '',
+                    adresseCourriel: '',
+                    nomEntreprise: '',
+                    problemes: '',
+                    informationsSupplementaires: '',
+                  });
+                }}
+                className="mt-6 rounded-full bg-brand px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_10px_30px_rgba(154,107,255,0.35)]"
+              >
+                Envoyer un autre message
+              </Button>
             </motion.div>
           ) : (
             <motion.form
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               onSubmit={handleSubmit}
-              className="max-w-md mx-auto bg-gray-900 rounded-lg p-8 border border-gray-700 space-y-6"
+              className="mx-auto max-w-md space-y-5 rounded-xl border border-white/10 bg-card/70 p-8"
             >
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Nom Complet *
+                <label className="mb-1.5 block text-sm font-medium text-foreground/80">
+                  Nom complet *
                 </label>
                 <Input
                   type="text"
                   value={formData.nomComplet}
                   onChange={(e) => handleInputChange('nomComplet', e.target.value)}
                   required
-                  className="bg-gray-800 border-gray-600 text-white"
+                  className="border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/60 focus:border-brand/40"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Adresse Courriel *
+                <label className="mb-1.5 block text-sm font-medium text-foreground/80">
+                  Adresse courriel *
                 </label>
                 <Input
                   type="email"
                   value={formData.adresseCourriel}
                   onChange={(e) => handleInputChange('adresseCourriel', e.target.value)}
                   required
-                  className="bg-gray-800 border-gray-600 text-white"
+                  className="border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/60 focus:border-brand/40"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Nom de l'Entreprise
+                <label className="mb-1.5 block text-sm font-medium text-foreground/80">
+                  Entreprise
                 </label>
                 <Input
                   type="text"
                   value={formData.nomEntreprise}
                   onChange={(e) => handleInputChange('nomEntreprise', e.target.value)}
-                  className="bg-gray-800 border-gray-600 text-white"
+                  className="border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/60 focus:border-brand/40"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Problèmes ou Besoins
+                <label className="mb-1.5 block text-sm font-medium text-foreground/80">
+                  Vos besoins ou défis
                 </label>
                 <Textarea
                   value={formData.problemes}
                   onChange={(e) => handleInputChange('problemes', e.target.value)}
                   rows={4}
-                  className="bg-gray-800 border-gray-600 text-white"
+                  className="border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/60 focus:border-brand/40"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Informations Supplémentaires
+                <label className="mb-1.5 block text-sm font-medium text-foreground/80">
+                  Informations complémentaires
                 </label>
                 <Textarea
                   value={formData.informationsSupplementaires}
-                  onChange={(e) => handleInputChange('informationsSupplementaires', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange('informationsSupplementaires', e.target.value)
+                  }
                   rows={3}
-                  className="bg-gray-800 border-gray-600 text-white"
+                  className="border-white/10 bg-white/5 text-foreground placeholder:text-muted-foreground/60 focus:border-brand/40"
                 />
               </div>
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:opacity-50"
+                className="w-full rounded-full bg-brand py-2.5 text-base font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_10px_30px_rgba(154,107,255,0.35)] disabled:opacity-50"
               >
-                {isSubmitting ? 'Envoi en cours...' : 'Envoyer le Message'}
+                {isSubmitting ? 'Envoi en cours…' : 'Envoyer'}
               </Button>
             </motion.form>
           )}
-        </section>
-      </motion.div>
+        </motion.section>
+      </div>
     </div>
   );
 };

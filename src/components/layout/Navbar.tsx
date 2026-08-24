@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Calendar } from 'lucide-react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { ConsultationModal } from '../modals/ConsultationModal';
+import { Logo } from './Logo';
 
 interface NavbarProps {
   isConsultationOpen: boolean;
@@ -15,6 +16,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   onConsultationToggle
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Transparent over the hero, solid once the page scrolls — no glass,
+  // no backdrop-blur: the bar earns its background instead of blurring one.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navItems = [
     { id: '/', label: 'Accueil' },
@@ -23,33 +34,39 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: '/apropos', label: 'À propos' },
   ];
 
+  const solid = scrolled || isMenuOpen;
+
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-blue-500/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          solid
+            ? 'border-b border-white/10 bg-[#0b0b0e]/95 shadow-[0_8px_30px_rgba(0,0,0,0.35)]'
+            : 'border-b border-transparent bg-gradient-to-b from-black/60 via-black/30 to-transparent'
+        }`}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            {/* Logo — transparent mark + wordmark (no baked black box) */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex items-center flex-shrink-0"
+              className="flex flex-shrink-0 items-center"
             >
-              <Link to="/">
-                <img src="/logoaixpt.png" alt="Aixpt Logo - Automatisation IA Québec" className="h-10 md:h-12 w-auto cursor-pointer" />
-              </Link>
+              <Logo />
             </motion.div>
 
-            {/* Desktop Navigation and Actions - Right Aligned */}
-            <div className="hidden md:flex items-center ml-auto space-x-8">
-              {/* Navigation Links */}
-              <div className="flex items-center space-x-6 relative">
+            {/* Desktop navigation + actions */}
+            <div className="ml-auto hidden items-center space-x-8 md:flex">
+              <div className="relative flex items-center space-x-7">
                 {navItems.map((item) => (
                   <NavLink
                     key={item.id}
                     to={item.id}
                     className={({ isActive }) =>
-                      `text-sm font-medium transition-colors duration-200 flex items-center 
-                      ${isActive ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`
+                      `text-sm font-medium transition-colors duration-200 ${
+                        isActive ? 'text-brand' : 'text-foreground/70 hover:text-white'
+                      }`
                     }
                   >
                     {item.label}
@@ -57,23 +74,22 @@ export const Navbar: React.FC<NavbarProps> = ({
                 ))}
               </div>
 
-              {/* Action Buttons */}
               <div className="flex items-center space-x-4">
                 <a
                   href="https://portal.aixpt.ca"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs lg:text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200 whitespace-nowrap"
+                  className="whitespace-nowrap text-xs font-medium text-foreground/70 transition-colors duration-200 hover:text-white lg:text-sm"
                 >
                   Portail
                 </a>
 
                 <Button
                   onClick={() => onConsultationToggle(true)}
-                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-4 lg:px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm whitespace-nowrap"
+                  className="h-10 whitespace-nowrap rounded-full bg-brand px-5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_8px_24px_rgba(154,107,255,0.35)]"
                 >
-                  <Calendar className="mr-1.5 lg:mr-2 h-3.5 w-3.5 lg:h-4 lg:w-4" />
-                  <span className="hidden lg:inline">Réserver Une Consultation</span>
+                  <Calendar className="mr-1.5 h-4 w-4 lg:mr-2" />
+                  <span className="hidden lg:inline">Réserver une consultation</span>
                   <span className="lg:hidden">Consultation</span>
                 </Button>
               </div>
@@ -83,21 +99,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-300 hover:text-white transition-colors"
+                className="text-foreground/80 transition-colors hover:text-white"
+                aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
               >
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </div>
 
-          {/* Mobile Navigation */}
+          {/* Mobile navigation */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="md:hidden border-t border-blue-500/20 py-4"
+                className="border-t border-white/10 py-4 md:hidden"
               >
                 <div className="flex flex-col space-y-4">
                   {navItems.map((item) => (
@@ -106,8 +123,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                       to={item.id}
                       onClick={() => setIsMenuOpen(false)}
                       className={({ isActive }) =>
-                        `text-left text-sm font-medium transition-colors duration-200 
-                        ${isActive ? 'text-blue-400' : 'text-gray-300 hover:text-white'}`
+                        `text-left text-sm font-medium transition-colors duration-200 ${
+                          isActive ? 'text-brand' : 'text-foreground/70 hover:text-white'
+                        }`
                       }
                     >
                       {item.label}
@@ -118,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     href="https://portal.aixpt.ca"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-left text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200"
+                    className="text-left text-sm font-medium text-foreground/70 transition-colors duration-200 hover:text-white"
                   >
                     Accéder au Portail
                   </a>
@@ -128,10 +146,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                       onConsultationToggle(true);
                       setIsMenuOpen(false);
                     }}
-                    className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-2 rounded-lg transition-all duration-300 w-full"
+                    className="w-full rounded-full bg-brand px-6 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-brand-hover"
                   >
                     <Calendar className="mr-2 h-4 w-4" />
-                    Réserver Une Consultation
+                    Réserver une consultation
                   </Button>
                 </div>
               </motion.div>

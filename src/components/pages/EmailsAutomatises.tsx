@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Target, Zap, TrendingUp, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import { Mail, TrendingUp, CheckCircle, ArrowLeft } from 'lucide-react';
+import { LaunchArrow } from '../icons/BrandIcons';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
+import InboxMockup from '../hero/InboxMockup';
 
 interface EmailsAutomatisesProps {
   onOpenConsultation: () => void;
@@ -11,26 +14,31 @@ interface EmailsAutomatisesProps {
 export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenConsultation }) => {
   const navigate = useNavigate();
   const functionalities = [
-    "Segmentation automatique des prospects",
-    "Personnalisation dynamique du contenu",
+    'Segmentation automatique des prospects',
+    'Personnalisation dynamique du contenu',
     "Optimisation des heures d'envoi",
-    "A/B testing automatisé",
-    "Suivi des performances en temps réel",
-    "Intégration CRM et analytics"
+    'A/B testing automatisé',
+    'Suivi des performances en temps réel',
+    'Intégration CRM et analytics',
   ];
 
   const advantages = [
     "Augmentation du taux d'ouverture de 40%",
-    "Amélioration du ROI marketing",
-    "Gain de temps considérable",
-    "Ciblage précis et personnalisé",
-    "Automatisation complète des campagnes",
-    "Optimisation continue des performances"
+    'Amélioration du ROI marketing',
+    'Gain de temps considérable',
+    'Ciblage précis et personnalisé',
+    'Automatisation complète des campagnes',
+    'Optimisation continue des performances',
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background pt-24 pb-16 text-foreground">
+      <Helmet>
+        <title>Emails Automatisés Personnalisés au Québec - AIXPT</title>
+        <meta name="description" content="Emails automatisés personnalisés par AIXPT au Québec. Automatisez votre prospection email et votre service client avec des agents IA intelligents." />
+        <meta name="keywords" content="emails automatisés Québec, automatisation email Montréal, prospection IA, marketing email AIXPT, personnalisation email Québec" />
+      </Helmet>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -41,7 +49,7 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenCons
           <Button
             onClick={() => navigate('/services')}
             variant="ghost"
-            className="text-purple-400 hover:text-purple-300 hover:bg-purple-400/10"
+            className="text-brand hover:text-white hover:bg-brand/10"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Retour aux Services
@@ -53,54 +61,55 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenCons
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-full p-6">
-              <Mail className="h-16 w-16 text-purple-400" />
+          <div className="mb-6 flex justify-center">
+            <div className="inline-flex h-24 w-24 items-center justify-center rounded-full border border-brand/30 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 p-6">
+              <Mail className="h-12 w-12 text-brand" />
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Emails Automatisés
-            </span>
+          <h1 className="font-display text-4xl font-semibold tracking-[-0.02em] md:text-6xl">
+            <span className="text-brand">Emails Automatisés</span>
             <br />
             <span className="text-white">Personnalisés</span>
           </h1>
 
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+          <p className="mx-auto mt-4 max-w-3xl text-xl text-muted-foreground">
             Prospection personnalisée. En pilote automatique.
           </p>
         </motion.div>
 
-        {/* Description */}
+        {/* Description + artifact */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-gray-900/50 backdrop-blur-sm border border-purple-500/20 rounded-lg p-8 mb-16"
+          className="mb-16 grid grid-cols-1 items-center gap-12 rounded-xl border border-white/10 bg-card/70 p-8 lg:grid-cols-2"
         >
-          <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
-          <p className="text-gray-300 leading-relaxed text-lg">
-            Transformez votre stratégie email marketing avec notre système d'automatisation intelligent.
-            Notre IA analyse le contexte client pour créer des courriels ciblés personalisés
-            qui convertissent. Chaque email est optimisé pour maximiser l'engagement et générer des
-            résultats mesurables.
-          </p>
+          <div>
+            <h2 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white">Description</h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+              Transformez votre stratégie email avec notre système d'automatisation intelligent.
+              Notre IA analyse le contexte client pour créer des courriels ciblés personnalisés qui
+              convertissent — et gère votre boîte de réception entrante : tri, réponses
+              automatiques et synchronisation CRM.
+            </p>
+          </div>
+          <InboxMockup />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           {/* Functionalities */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-gray-900/50 backdrop-blur-sm border border-purple-500/20 rounded-lg p-8"
+            className="rounded-xl border border-white/10 bg-card/70 p-8"
           >
-            <div className="flex items-center mb-6">
-              <Mail className="h-8 w-8 text-purple-400 mr-3" />
-              <h2 className="text-2xl font-bold text-white">Services</h2>
+            <div className="mb-6 flex items-center">
+              <Mail className="mr-3 h-8 w-8 text-brand" />
+              <h2 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white">Services</h2>
             </div>
 
             <ul className="space-y-4">
@@ -110,9 +119,9 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenCons
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                  className="flex items-start text-gray-300"
+                  className="flex items-start text-muted-foreground"
                 >
-                  <CheckCircle className="h-5 w-5 text-purple-400 mr-3 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-brand" />
                   <span>{functionality}</span>
                 </motion.li>
               ))}
@@ -124,11 +133,11 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenCons
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-gray-900/50 backdrop-blur-sm border border-purple-500/20 rounded-lg p-8"
+            className="rounded-xl border border-white/10 bg-card/70 p-8"
           >
-            <div className="flex items-center mb-6">
-              <TrendingUp className="h-8 w-8 text-pink-400 mr-3" />
-              <h2 className="text-2xl font-bold text-white">Avantages</h2>
+            <div className="mb-6 flex items-center">
+              <TrendingUp className="mr-3 h-8 w-8 text-brand" />
+              <h2 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white">Avantages</h2>
             </div>
 
             <ul className="space-y-4">
@@ -138,9 +147,9 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenCons
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                  className="flex items-start text-gray-300"
+                  className="flex items-start text-muted-foreground"
                 >
-                  <CheckCircle className="h-5 w-5 text-pink-400 mr-3 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-brand" />
                   <span>{advantage}</span>
                 </motion.li>
               ))}
@@ -152,21 +161,21 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenCons
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
-          className="text-center mt-16"
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-16 text-center"
         >
-          <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-lg p-8">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Prêt à Booster Vos Conversions ?
+          <div className="rounded-xl border border-white/10 bg-card/70 p-8">
+            <h3 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white">
+              Prêt à booster vos conversions ?
             </h3>
-            <p className="text-gray-300 mb-6">
+            <p className="mb-6 mt-3 text-muted-foreground">
               Découvrez comment automatiser votre prospection email avec l'IA
             </p>
             <Button
               onClick={onOpenConsultation}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+              className="rounded-full bg-brand px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_10px_30px_rgba(154,107,255,0.35)]"
             >
-              <Zap className="mr-2 h-5 w-5" />
+              <LaunchArrow className="mr-2 h-5 w-5" />
               Commencer Maintenant
             </Button>
           </div>
