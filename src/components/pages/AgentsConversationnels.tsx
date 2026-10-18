@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { metaFor, SITE_URL } from '../../seo/meta';
 import { MessageCircle, Users, Sparkles, CheckCircle, ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import ChatWindowMockup from '../hero/ChatWindowMockup';
 
@@ -33,9 +34,10 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
   return (
     <div className="min-h-screen bg-background pt-24 pb-16 text-foreground">
       <Helmet>
-        <title>Agents Conversationnels IA au Québec - AIXPT Montréal</title>
-        <meta name="description" content="Découvrez nos agents conversationnels IA au Québec. Automatisez le support client avec des chatbots intelligents par AIXPT, basés à Montréal pour les entreprises locales." />
-        <meta name="keywords" content="agents conversationnels Québec, chatbots IA Montréal, support client IA, automatisation Québec, IA conversationnelle AIXPT" />
+        <title>{metaFor('/agents-conversationnels')!.title}</title>
+        <meta name="description" content={metaFor('/agents-conversationnels')!.description} />
+        <meta name="keywords" content="chatbot IA site web, agent conversationnel, chatbot entreprise, support client IA, clavardage IA, agents conversationnels Québec" />
+        <link rel="canonical" href={`${SITE_URL}/agents-conversationnels`} />
       </Helmet>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
@@ -69,9 +71,9 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
           </div>
 
           <h1 className="font-display text-4xl font-semibold tracking-[-0.02em] md:text-6xl">
-            <span className="text-brand">Agents Conversationnels</span>
+            <span className="text-brand">Chatbot IA &amp; Agents Conversationnels</span>
             <br />
-            <span className="text-white">IA au Québec — AIXPT</span>
+            <span className="text-white">pour entreprises au Québec — AIXPT</span>
           </h1>
 
           <p className="mx-auto mt-4 max-w-3xl text-xl text-muted-foreground">
@@ -155,6 +157,33 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
             </ul>
           </motion.div>
         </div>
+
+        {/* Sector cross-link */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="mt-12"
+        >
+          <Link
+            to="/chatbot-ia-clinique"
+            className="block rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+              Solution sectorielle
+            </p>
+            <h3 className="mt-2 font-display text-xl font-semibold text-white">
+              Vous gérez une clinique ou un cabinet ?
+            </h3>
+            <p className="mt-2 text-muted-foreground">
+              Découvrez notre chatbot IA conçu pour les cliniques : prise de rendez-vous, réponses
+              aux questions fréquentes et rappels automatiques.
+            </p>
+            <span className="mt-3 inline-flex items-center text-sm font-medium text-brand">
+              Voir la solution pour cliniques
+            </span>
+          </Link>
+        </motion.div>
 
         {/* CTA Section */}
         <motion.div

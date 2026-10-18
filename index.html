@@ -1,11 +1,14 @@
 <!doctype html>
-<html lang="fr" class="dark">
+<html lang="fr-CA" class="dark">
   <head>
     <!-- Core / Standard SEO -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIXPT - L'automatisation IA au Québec</title>
-    <meta name="description" content="AIXPT aide les entreprises du Québec à récupérer leurs leads perdus, automatiser leur réception téléphonique et offrir un support 24/7 intégré à leurs systèmes." />
+    <!-- Fallback title/description for the homepage. Actual per-route values are injected at build
+         time by scripts/prerender.mjs (source: src/seo/routes.json), which also matches React Helmet. -->
+    <title>AIXPT — Automatisation IA au Québec | Réceptionniste et chatbot IA</title>
+    <meta name="description" content="Agence d'automatisation IA au Québec. Réceptionniste IA et agent vocal 24/7, chatbot IA pour votre site web, intégrés à vos systèmes. Parlez à un expert." />
+    <link rel="canonical" href="https://www.aixpt.ca/" />
     <link rel="icon" type="image/png" href="/logo2.png" />
 
     <!-- Fonts: Space Grotesk (display), Inter (body), JetBrains Mono (kickers) -->
@@ -15,38 +18,73 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    
-    <!-- Open Graph / Social Media -->
+
+    <!-- Open Graph / Social Media. The canonical host is www.aixpt.ca (the apex 308-redirects there). -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="AIXPT - L'automatisation IA au Québec" />
-    <meta property="og:description" content="Récupérez vos leads perdus, automatisez votre réception téléphonique et offrez un support 24/7." />
-    <meta property="og:url" content="https://aixpt.ca/" />
-    <meta property="og:image" content="https://aixpt.ca/logo2.png" />
-    
-    <!-- Structured Data for LLMs and Google (JSON-LD) -->
+    <meta property="og:site_name" content="AIXPT" />
+    <meta property="og:locale" content="fr_CA" />
+    <meta property="og:title" content="AIXPT — Automatisation IA au Québec | Réceptionniste et chatbot IA" />
+    <meta property="og:description" content="Agence d'automatisation IA au Québec. Réceptionniste IA et agent vocal 24/7, chatbot IA pour votre site web, intégrés à vos systèmes. Parlez à un expert." />
+    <meta property="og:url" content="https://www.aixpt.ca/" />
+    <meta property="og:image" content="https://www.aixpt.ca/logo2.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Structured data for Google and LLMs: one consistent business entity.
+         Replaces the previous LocalBusiness block that conflicted with the wrong-domain Organization. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "AIXPT",
-      "image": "https://aixpt.ca/logo2.png",
-      "description": "AIXPT aide les entreprises du Québec à récupérer leurs leads perdus, offre un support client 24/7 et automatise la réception téléphonique.",
-      "url": "https://aixpt.ca",
-      "telephone": "+1-418-800-5085",
-      "email": "support@aixpt.ca",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Québec",
-        "addressRegion": "QC",
-        "addressCountry": "CA"
-      },
-      "areaServed": "Québec, Canada"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.aixpt.ca/#organization",
+          "name": "AIXPT",
+          "alternateName": "AIXPT.ca",
+          "url": "https://www.aixpt.ca/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.aixpt.ca/logo2.png"
+          },
+          "description": "Agence d'automatisation IA au Québec : agents vocaux et agents conversationnels (clavardage) pour entreprises.",
+          "email": "support@aixpt.ca",
+          "telephone": "+1-418-800-5085"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.aixpt.ca/#website",
+          "url": "https://www.aixpt.ca/",
+          "name": "AIXPT",
+          "inLanguage": "fr-CA",
+          "publisher": { "@id": "https://www.aixpt.ca/#organization" }
+        },
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://www.aixpt.ca/#localbusiness",
+          "name": "AIXPT",
+          "image": "https://www.aixpt.ca/logo2.png",
+          "url": "https://www.aixpt.ca/",
+          "telephone": "+1-418-800-5085",
+          "email": "support@aixpt.ca",
+          "description": "AIXPT automatise la réception téléphonique et le support client des entreprises du Québec avec des agents IA.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Québec",
+            "addressRegion": "QC",
+            "addressCountry": "CA"
+          },
+          "areaServed": {
+            "@type": "AdministrativeArea",
+            "name": "Québec, Canada"
+          },
+          "parentOrganization": { "@id": "https://www.aixpt.ca/#organization" }
+        }
+      ]
     }
     </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
+
   </body>
 </html>

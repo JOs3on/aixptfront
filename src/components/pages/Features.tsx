@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { Mic, Mail, MessageCircle, Globe, ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { metaFor, SITE_URL } from '../../seo/meta';
+import { Mic, Mail, MessageCircle, Globe, ArrowRight, Car, HeartPulse } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 
 interface FeaturesProps {
@@ -43,9 +44,10 @@ export const Features: React.FC<FeaturesProps> = ({ onOpenConsultation }) => {
   return (
     <div className="min-h-screen bg-background pt-24 pb-16 text-foreground">
       <Helmet>
-        <title>Services IA AIXPT au Québec - Automatisation et IA pour PME et grandes entreprises</title>
-        <meta name="description" content="Découvrez nos solutions d'intelligence artificielle au Québec pour transformer votre entreprise. Services d'automatisation IA à Montréal et province: assistants vocaux, agents conversationnels, création web." />
+        <title>{metaFor('/services')!.title}</title>
+        <meta name="description" content={metaFor('/services')!.description} />
         <meta name="keywords" content="services IA Québec, automatisation Montréal AIXPT, agents conversationnels Québec, création sites web IA province, SEO Québec" />
+        <link rel="canonical" href={`${SITE_URL}/services`} />
       </Helmet>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -106,6 +108,57 @@ export const Features: React.FC<FeaturesProps> = ({ onOpenConsultation }) => {
             );
           })}
         </div>
+
+        {/* Solutions par secteur */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-16"
+        >
+          <div className="mb-8 text-center">
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.02em] text-white md:text-4xl">
+              Solutions par secteur
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+              Des configurations pensées pour les réalités de votre industrie.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <Link
+              to="/receptionniste-ia-concessionnaires-automobiles"
+              className="rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
+            >
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                <Car className="h-5 w-5" />
+              </div>
+              <h3 className="text-base font-semibold text-white">
+                Réceptionniste IA pour concessionnaires automobiles
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Répondez à tous les appels, qualifiez les leads et remplissez l'agenda du service —
+                24/7.
+              </p>
+            </Link>
+
+            <Link
+              to="/chatbot-ia-clinique"
+              className="rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
+            >
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-brand/20 bg-gradient-to-br from-[#9a6bff]/25 to-[#7a4bff]/10 text-brand">
+                <HeartPulse className="h-5 w-5" />
+              </div>
+              <h3 className="text-base font-semibold text-white">
+                Chatbot IA pour cliniques et cabinets
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Prise de rendez-vous, questions fréquentes et rappels automatiques pour alléger
+                votre réception.
+              </p>
+            </Link>
+          </div>
+        </motion.div>
 
         {/* CTA Section */}
         <motion.div

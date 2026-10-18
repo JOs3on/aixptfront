@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { metaFor, SITE_URL } from '../../seo/meta';
 import { Mail, Phone, ArrowRight, CheckCircle, MessageSquareText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
@@ -55,15 +56,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenConsultation }) 
   return (
     <div className="min-h-screen bg-background pb-16 pt-24 text-foreground">
       <Helmet>
-        <title>Contactez AIXPT — Automatisation IA, Québec</title>
-        <meta
-          name="description"
-          content="Contactez AIXPT au Québec pour l'automatisation IA : assistant vocal, emails, chatbots et création de sites web. Parlez à notre équipe."
-        />
+        <title>{metaFor('/contact')!.title}</title>
+        <meta name="description" content={metaFor('/contact')!.description} />
         <meta
           name="keywords"
           content="contact AIXPT, IA Québec, automatisation entreprise, services IA Montréal, consultation IA"
         />
+        <link rel="canonical" href={`${SITE_URL}/contact`} />
       </Helmet>
 
       <div className="mx-auto max-w-6xl px-4">

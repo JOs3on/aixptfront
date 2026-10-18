@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { metaFor, SITE_URL } from '../../seo/meta';
 import { Mail, TrendingUp, CheckCircle, ArrowLeft } from 'lucide-react';
 import { LaunchArrow } from '../icons/BrandIcons';
 import { useNavigate } from 'react-router-dom';
@@ -34,9 +35,10 @@ export const EmailsAutomatises: React.FC<EmailsAutomatisesProps> = ({ onOpenCons
   return (
     <div className="min-h-screen bg-background pt-24 pb-16 text-foreground">
       <Helmet>
-        <title>Emails Automatisés Personnalisés au Québec - AIXPT</title>
-        <meta name="description" content="Emails automatisés personnalisés par AIXPT au Québec. Automatisez votre prospection email et votre service client avec des agents IA intelligents." />
+        <title>{metaFor('/emails-automatises')!.title}</title>
+        <meta name="description" content={metaFor('/emails-automatises')!.description} />
         <meta name="keywords" content="emails automatisés Québec, automatisation email Montréal, prospection IA, marketing email AIXPT, personnalisation email Québec" />
+        <link rel="canonical" href={`${SITE_URL}/emails-automatises`} />
       </Helmet>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Back Button */}

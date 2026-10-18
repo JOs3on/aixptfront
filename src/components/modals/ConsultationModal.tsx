@@ -76,10 +76,17 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
         className="relative rounded-2xl border border-white/10 bg-popover p-8 shadow-[0_30px_80px_rgba(0,0,0,0.6)] max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-white">
-            {showSuccess ? 'Merci pour votre demande !' : 'Formulaire de contact'}
-          </h2>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-white">
+              {showSuccess ? 'Demande reçue !' : 'Réserver une consultation diagnostic (15 min)'}
+            </h2>
+            {!showSuccess && (
+              <p className="text-sm text-muted-foreground mt-1">
+                Une brève discussion sans pression pour analyser la gestion de vos appels et voir si une automatisation est rentable pour votre entreprise.
+              </p>
+            )}
+          </div>
           <button
             onClick={() => {
               if (showSuccess) {
@@ -89,7 +96,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 onClose();
               }
             }}
-            className="text-muted-foreground hover:text-white transition-colors"
+            className="text-muted-foreground hover:text-white transition-colors ml-4 self-start"
           >
             <X className="h-6 w-6" />
           </button>
@@ -175,18 +182,18 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
           {/* Informations sur le Projet */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4 uppercase tracking-wide">
-              Informations sur le Projet
+              Votre Situation Actuelle
             </h3>
             
             <div>
               <label className="block text-sm font-medium text-foreground/80 mb-2">
-                Quels problèmes spécifiques cherchez-vous à résoudre ? <span className="text-red-400">*</span>
+                Quel est votre enjeu principal avec vos appels ou demandes web ? <span className="text-red-400">*</span>
               </label>
               <Textarea
-                placeholder="Décrivez vos défis actuels et les résultats souhaités"
+                placeholder="Ex: appels manqués le soir et fin de semaine, débordement au rush du samedi, délais de réponse aux formulaires..."
                 value={formData.problemes}
                 onChange={(e) => handleInputChange('problemes', e.target.value)}
-                className="bg-card border-white/10 text-white placeholder:text-foreground/40 focus:border-brand min-h-[120px]"
+                className="bg-card border-white/10 text-white placeholder:text-foreground/40 focus:border-brand min-h-[100px]"
                 required
               />
             </div>
@@ -196,10 +203,10 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 Informations supplémentaires
               </label>
               <Textarea
-                placeholder="Optionnel : partagez d'autres détails pertinents sur votre projet ou vos besoins"
+                placeholder="Optionnel : volume d'appels approximatif, logiciels utilisés, etc."
                 value={formData.informationsSupplementaires}
                 onChange={(e) => handleInputChange('informationsSupplementaires', e.target.value)}
-                className="bg-card border-white/10 text-white placeholder:text-foreground/40 focus:border-brand min-h-[120px]"
+                className="bg-card border-white/10 text-white placeholder:text-foreground/40 focus:border-brand min-h-[80px]"
               />
             </div>
           </div>
@@ -208,9 +215,9 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full rounded-full px-8 py-4 text-lg font-semibold transition-all duration-300 ${isSubmitting ? 'cursor-not-allowed bg-muted text-muted-foreground' : 'bg-brand text-white hover:bg-brand-hover'}`}
+            className={`w-full rounded-full px-8 py-4 text-base font-semibold transition-all duration-300 ${isSubmitting ? 'cursor-not-allowed bg-muted text-muted-foreground' : 'bg-brand text-white hover:bg-brand-hover'}`}
           >
-            {isSubmitting ? 'Envoi en cours...' : 'Réserver votre consultation'}
+            {isSubmitting ? 'Envoi en cours...' : 'Planifier ma consultation diagnostic (15 min)'}
             {!isSubmitting && <ArrowRight className="ml-2 h-5 w-5" />}
           </Button>
           </form>

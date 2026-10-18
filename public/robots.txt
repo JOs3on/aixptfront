@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aixpt.ca/sitemap.xml
+Sitemap: https://www.aixpt.ca/sitemap.xml

@@ -1,0 +1,75 @@
+{
+  "site": "https://www.aixpt.ca",
+  "routes": [
+    {
+      "path": "/",
+      "title": "AIXPT — Automatisation IA au Québec | Réceptionniste et chatbot IA",
+      "description": "Agence d'automatisation IA au Québec. Réceptionniste IA et agent vocal 24/7, chatbot IA pour votre site web, intégrés à vos systèmes. Parlez à un expert.",
+      "changefreq": "weekly",
+      "priority": "1.0"
+    },
+    {
+      "path": "/services",
+      "title": "Services d'automatisation IA au Québec | AIXPT",
+      "description": "Assistants vocaux, agents conversationnels, emails automatisés et création de sites web optimisés SEO — des solutions IA sur mesure pour les entreprises du Québec.",
+      "changefreq": "monthly",
+      "priority": "0.9"
+    },
+    {
+      "path": "/assistant-vocal",
+      "title": "Réceptionniste IA et agent vocal IA au Québec | AIXPT",
+      "description": "Réceptionniste IA et agent vocal IA qui répondent à vos appels 24/7, qualifient vos clients et réservent vos rendez-vous. Conçu pour les PME et entreprises du Québec.",
+      "changefreq": "monthly",
+      "priority": "0.9"
+    },
+    {
+      "path": "/agents-conversationnels",
+      "title": "Chatbot IA pour site web et agent conversationnel | AIXPT",
+      "description": "Chatbot IA pour votre site web et agents conversationnels qui qualifient, conseillent et offrent un support client 24/7. Intégrés à vos systèmes, au Québec.",
+      "changefreq": "monthly",
+      "priority": "0.9"
+    },
+    {
+      "path": "/receptionniste-ia-concessionnaires-automobiles",
+      "title": "Réceptionniste IA pour concessionnaires automobiles | AIXPT",
+      "description": "Réceptionniste IA pour concessionnaires automobiles : répondez à tous vos appels 24/7, qualifiez les leads et prenez les rendez-vous du service. Intégration CRM (CDK, Dealertrack).",
+      "changefreq": "monthly",
+      "priority": "0.8"
+    },
+    {
+      "path": "/chatbot-ia-clinique",
+      "title": "Chatbot IA pour cliniques et cabinets | AIXPT",
+      "description": "Chatbot IA pour cliniques : prise de rendez-vous, réponses aux questions fréquentes et rappels automatiques, 24/7. Conçu pour les cliniques du Québec.",
+      "changefreq": "monthly",
+      "priority": "0.8"
+    },
+    {
+      "path": "/contact",
+      "title": "Contactez AIXPT — consultation IA gratuite | Québec",
+      "description": "Parlez à un expert en automatisation IA au Québec. Consultation sans engagement pour votre réceptionniste IA, votre chatbot ou vos processus.",
+      "changefreq": "monthly",
+      "priority": "0.8"
+    },
+    {
+      "path": "/apropos",
+      "title": "À propos d'AIXPT — Agence IA au Québec",
+      "description": "AIXPT est une agence d'automatisation IA basée au Québec. Nous déployons des agents vocaux et des chatbots IA directement dans les systèmes de nos clients.",
+      "changefreq": "monthly",
+      "priority": "0.6"
+    },
+    {
+      "path": "/emails-automatises",
+      "title": "Emails automatisés et prospection IA au Québec | AIXPT",
+      "description": "Automatisez votre prospection et votre service client par courriel grâce à l'IA. Séquences personnalisées et relances automatiques pour les entreprises du Québec.",
+      "changefreq": "monthly",
+      "priority": "0.6"
+    },
+    {
+      "path": "/creation-sites-web",
+      "title": "Création de sites web SEO au Québec | AIXPT",
+      "description": "Sites web sur mesure, rapides et optimisés SEO et GEO (visibilité IA) pour les entreprises du Québec. Design moderne et orienté conversion.",
+      "changefreq": "monthly",
+      "priority": "0.6"
+    }
+  ]
+}

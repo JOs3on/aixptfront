@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { metaFor, SITE_URL } from './seo/meta';
 import { Navbar } from './components/layout/Navbar';
 import { AIXPTHero } from './components/hero/AIXPTHero';
 import { Features } from './components/pages/Features';
@@ -9,10 +10,13 @@ import { AssistantVocal } from './components/pages/AssistantVocal';
 import { EmailsAutomatises } from './components/pages/EmailsAutomatises';
 import { AgentsConversationnels } from './components/pages/AgentsConversationnels';
 import { CreationSitesWeb } from './components/pages/CreationSitesWeb';
+import { ReceptionnisteIAConcessionnaires } from './components/pages/ReceptionnisteIAConcessionnaires';
+import { ChatbotIAClinique } from './components/pages/ChatbotIAClinique';
 import { ContactPage } from './components/pages/ContactPage';
 import ReflectShowcase from './components/ReflectShowcase';
 import AIIntelligenceBridge from './components/AIIntelligenceBridge';
 import { Sandbox } from './components/pages/Sandbox';
+import { VapiDemoPage } from './components/pages/VapiDemoPage';
 import { VoiceflowWidget } from './components/layout/VoiceflowWidget';
 import { Footer } from './components/layout/Footer';
 import SynaraClone from '../synara-clone/SynaraClone';
@@ -48,38 +52,12 @@ function AppContent() {
             <Route path="/" element={
               <>
                 <Helmet>
-                  <title>AIXPT - L'IA qui travaille pendant que vous dormez.</title>
-                  <meta name="description" content="Pionniers de l'automatisation intelligente basés au Québec, nous créons des solutions IA pour transformer les entreprises." />
-                  <script type="application/ld+json">
-                    {JSON.stringify({
-                      "@context": "https://schema.org",
-                      "@type": "Organization",
-                      "name": "AIXPT",
-                      "description": "Pionniers de l'automatisation intelligente basés au Québec, nous créons des solutions IA pour transformer les entreprises.",
-                      "url": "https://aixpt.com",
-                      "logo": "https://aixpt.com/logo2.png",
-                      "address": {
-                        "@type": "PostalAddress",
-                        "addressRegion": "Québec",
-                        "addressCountry": "CA",
-                        "addressLocality": "Montréal"
-                      },
-                      "contactPoint": {
-                        "@type": "ContactPoint",
-                        "telephone": "+1-555-123-4567",
-                        "contactType": "customer service",
-                        "email": "info@aixpt.com",
-                        "areaServed": "Québec, Canada"
-                      },
-                      "sameAs": [
-                        "https://twitter.com/aixpt",
-                        "https://linkedin.com/company/aixpt"
-                      ]
-                    })}
-                  </script>
+                  <title>{metaFor('/')!.title}</title>
+                  <meta name="description" content={metaFor('/')!.description} />
+                  <link rel="canonical" href={`${SITE_URL}/`} />
                 </Helmet>
                 <AIXPTHero
-                  title="L'IA qui travaille pendant que vous dormez."
+                  title="AIXPT — L'IA qui travaille pendant que vous dormez."
                   subtitle="Récupérez vos leads perdus, répondez aux appels 24/7 et synchronisez tous vos systèmes — avec des agents IA qui travaillent pour vous, sans lever le petit doigt."
                   ctaText="Réserver une consultation"
                   onOpenConsultation={() => setIsConsultationOpen(true)}
@@ -93,6 +71,8 @@ function AppContent() {
             <Route path="/emails-automatises" element={<EmailsAutomatises onOpenConsultation={() => setIsConsultationOpen(true)} />} />
             <Route path="/agents-conversationnels" element={<AgentsConversationnels onOpenConsultation={() => setIsConsultationOpen(true)} />} />
             <Route path="/creation-sites-web" element={<CreationSitesWeb onOpenConsultation={() => setIsConsultationOpen(true)} />} />
+            <Route path="/receptionniste-ia-concessionnaires-automobiles" element={<ReceptionnisteIAConcessionnaires onOpenConsultation={() => setIsConsultationOpen(true)} />} />
+            <Route path="/chatbot-ia-clinique" element={<ChatbotIAClinique onOpenConsultation={() => setIsConsultationOpen(true)} />} />
             {/* Analyste 360 is not currently offered — redirect to the services page */}
             <Route path="/analyste-automatique-360" element={<Navigate to="/services" replace />} />
 
@@ -101,6 +81,8 @@ function AppContent() {
 
             <Route path="/sandbox/:clientName" element={<Sandbox />} />
             <Route path="/sandbox" element={<Sandbox />} />
+            <Route path="/demo/:clientName" element={<VapiDemoPage />} />
+            <Route path="/demo" element={<VapiDemoPage />} />
             <Route path="/synara-clone" element={<SynaraClone />} />
 
 

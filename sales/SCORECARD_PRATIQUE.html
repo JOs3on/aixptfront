@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scorecard Prospection — Pratique</title>
+<style>
+  :root{--bg:#0a0e14;--card:#111826;--card2:#0d1420;--line:#1e293b;--txt:#e2e8f0;--dim:#94a3b8;--gold:#fbbf24;--green:#34d399;--red:#f87171;--blue:#60a5fa;--purple:#c084fc}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:32px 16px;line-height:1.5}
+  .wrap{max-width:880px;margin:0 auto}
+  h1{font-size:26px;letter-spacing:-.5px;margin-bottom:4px}
+  .sub{color:var(--dim);font-size:14px;margin-bottom:28px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:18px}
+  .card h2{font-size:15px;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);margin-bottom:14px}
+  .card h2 .n{display:inline-block;background:var(--gold);color:#0a0e14;width:22px;height:22px;border-radius:6px;text-align:center;line-height:22px;margin-right:8px;font-weight:700}
+  .flow{display:flex;flex-direction:column;gap:0}
+  .step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+  .step:last-child{border-bottom:none}
+  .q{flex:1}
+  .q b{display:block;font-size:14px}
+  .q span{font-size:12.5px;color:var(--dim)}
+  .ans{min-width:150px;text-align:right;font-size:12.5px;font-weight:600}
+  .yes{color:var(--green)}.no{color:var(--red)}
+  .decision{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13.5px}
+  .decision b{color:var(--blue)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;color:var(--dim);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.8px;padding:6px 8px;border-bottom:1px solid var(--line)}
+  td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700}
+  .p-email{background:rgba(96,165,250,.15);color:var(--blue)}
+  .p-phone{background:rgba(52,211,153,.15);color:var(--green)}
+  .p-hybrid{background:rgba(192,132,252,.15);color:var(--purple)}
+  .p-1{background:rgba(251,191,36,.18);color:var(--gold)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}.ans{min-width:110px}}
+  .friction{background:var(--card2);border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 6px 6px 0;margin:6px 0;font-size:13px}
+  .friction b{color:var(--gold)}
+  .checks{list-style:none}
+  .checks li{padding:6px 0;border-bottom:1px dashed var(--line);font-size:13.5px;display:flex;gap:10px}
+  .checks li:last-child{border:none}
+  .checks li::before{content:"☐";color:var(--gold);font-size:15px}
+  .prompt{background:#050810;border:1px solid var(--line);border-radius:8px;padding:14px;font-family:'SF Mono',Menlo,monospace;font-size:11.5px;color:#a5b4fc;white-space:pre-wrap;max-height:220px;overflow-y:auto}
+  .score{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .score input{display:none}
+  .score label{border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--dim)}
+  .score input:checked+label{border-color:var(--gold);color:var(--gold);background:rgba(251,191,36,.08)}
+  .verdict{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:14px;font-weight:600;display:none}
+  .v-go{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:var(--green)}
+  .v-stop{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(--red)}
+  .tag{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.8px}
+  .script{background:var(--card2);border-radius:8px;padding:12px 14px;font-size:13.5px;font-style:italic;color:var(--txt);border:1px solid var(--line);margin-top:8px}
+  .footer{color:var(--dim);font-size:12px;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎯 Scorecard Prospection</h1>
+  <p class="sub">Référence de pratique — basée sur Sales Outreach.md · SALES AI notes.md · PLAN_AUTOMATION_2026.md · DOULEURS_NICHES.md</p>
+
+  <!-- 1. NICHE TEST -->
+  <div class="card">
+    <h2><span class="n">1</span>Test Niche — viable ou pas ?</h2>
+    <p class="tag" style="margin-bottom:8px">Coche les 5 critères — 4/5 oui = GO, sinon passe</p>
+    <div class="score" id="nicheScore">
+      <input type="checkbox" id="c1"><label for="c1">Décideur accessible</label>
+      <input type="checkbox" id="c2"><label for="c2">Leads mesurables perdus</label>
+      <input type="checkbox" id="c3"><label for="c3">Client ≥ 3× ton setup</label>
+      <input type="checkbox" id="c4"><label for="c4">Douleur visible &lt;10s</label>
+      <input type="checkbox" id="c5"><label for="c5">Douleur permanente/urgente</label>
+    </div>
+    <div class="verdict v-go" id="vGo">✅ GO — 4/5 ou plus. Construis la liste et lance.</div>
+    <div class="verdict v-stop" id="vStop">❌ STOP — moins de 4/5. Passe à la niche suivante.</div>
+    <div class="decision" style="margin-top:14px">Filtre de la douleur (SALES AI notes.md) : <b>« Si cette douleur continue 90 jours, ça coûte quoi ? »</b> — si tu ne peux pas répondre simplement, ce n'est pas la douleur.</div>
+  </div>
+
+  <!-- 2. CANAL -->
+  <div class="card">
+    <h2><span class="n">2</span>Test Canal — Email ou Téléphone ?</h2>
+    <div class="flow">
+      <div class="step"><div class="q"><b>Si j'appelle, est-ce que C'EST ELLE qui décroche ?</b><span>Owner-operator (HVAC, courtier, concessionnaire indép.)</span></div><div class="ans yes">Oui → 📞 TÉLÉPHONE</div></div>
+      <div class="step"><div class="q"><b>Quelqu'un filtre (gatekeeper) ?</b><span>Réceptionniste, secrétaire, accueil</span></div><div class="ans no">Oui → ✉️ EMAIL</div></div>
+      <div class="step"><div class="q"><b>Indisponible toute la journée ?</b><span>Chantier, salle, audience, interventions</span></div><div class="ans no">Oui → ✉️ EMAIL</div></div>
+      <div class="step"><div class="q"><b>La douleur est sur le TÉLÉPHONE ?</b><span>Appels manqués, ligne occupée — démontrable en direct : « j'ai appelé hier 19h… »</span></div><div class="ans yes">Oui → 📞 (ou hybride si gatekeeper fort)</div></div>
+      <div class="step"><div class="q"><b>La douleur est sur le WEB ?</b><span>Formulaire, chat, site — friction vérifiable en 1 clic</span></div><div class="ans yes">Oui → ✉️ EMAIL (Variable Y la prouve)</div></div>
+      <div class="step"><div class="q"><b>Bassin petit et rare ?</b><span>Chaque lead vaut un effort humain + démo live</span></div><div class="ans yes">Oui → 📞 TÉLÉPHONE</div></div>
+    </div>
+    <div class="decision">Portfolio actuel — <b>✉️ Email (moteur)</b> : Dentistes → HVAC → Plombiers → Toitures → Vétérinaires → Avocats → Écoles de conduite. <b>📞 Téléphone</b> : Concessionnaires indép. + Courtiers immobiliers. <b>🔀 Hybride</b> : Assureurs, Comptables (hors saison).</div>
+  </div>
+
+  <!-- 3. FRICTION PAR NICHE -->
+  <div class="card">
+    <h2><span class="n">3</span>La friction par niche (visible &lt;10s, 1 page, decision-tied)</h2>
+    <div class="friction"><b>Dentistes</b> — formulaire sans confirmation de disponibilité ; rien sur ce qui arrive en soirée <span style="color:var(--dim)">(email → chatbot solo / vocal 2+ dentistes)</span></div>
+    <div class="friction"><b>HVAC</b> — pas de numéro d'urgence visible / ligne occupée en pleine canicule <span style="color:var(--dim)">(email → vocal)</span></div>
+    <div class="friction"><b>Concessionnaires</b> — demande web de dimanche 21h sans réponse ; 2e appel quand la réception est en ligne <span style="color:var(--dim)">(téléphone — voir ANGLES_CONCESSIONNAIRES.md)</span></div>
+    <div class="friction"><b>Plombiers</b> — urgence 22h → boîte vocale → le client appelle le suivant <span style="color:var(--dim)">(email → vocal)</span></div>
+    <div class="friction"><b>Toitures</b> — soumission par formulaire, réponse sous 3-5 jours, contrat signé ailleurs <span style="color:var(--dim)">(email → chatbot)</span></div>
+    <div class="friction"><b>Vétérinaires</b> — urgence animale + débordement d'appels <span style="color:var(--dim)">(email → vocal, clone dentistes)</span></div>
+    <div class="friction"><b>Avocats (petits cabinets)</b> — appel pendant l'audience = perdu <span style="color:var(--dim)">(email sobre → vocal)</span></div>
+    <div class="friction"><b>Écoles de conduite</b> — parent qui veut inscrire son ados le soir, formulaire papier <span style="color:var(--dim)">(email → chatbot inscription)</span></div>
+  </div>
+
+  <!-- 4. PROMPT RECHERCHE -->
+  <div class="card">
+    <h2><span class="n">4</span>Prompt de découverte (Perplexity / Gemini / Module 2)</h2>
+    <div class="prompt">Tu es un chercheur B2B. Pour [NOM] — [SITE WEB], vérifie et remplis :
+
+{
+  "decision_maker_name": "Prénom NOM — SEULEMENT si confirmé sur 2 sources, sinon null",
+  "page_url": "URL EXACTE de la page où vit la friction",
+  "friction": "UNE friction visible <10s. Si aucune → \"skip\": true",
+  "recognizable_reason": "le comportement humain du visiteur (pas de jargon)",
+  "consequence_mechanism": "chaîne cause-effet SANS chiffres",
+  "subject_line": "libellé de décision = le micro-oui de l'email",
+  "offer_lane": "chatbot | vocal | seo",
+  "consent_basis": "URL où l'adresse a été trouvée"
+}
+
+RÈGLES : 1 friction / 1 page. Observable ou conditionnel. Jamais de chiffres.
+Jamais d'accusation. Variable faible → skip, jamais compenser avec des mots.</div>
+  </div>
+
+  <!-- 5. CHECKLIST EMAIL -->
+  <div class="card">
+    <h2><span class="n">5</span>Checklist Email X + Variable Y (avant chaque envoi)</h2>
+    <ul class="checks">
+      <li>La friction se vérifie en 10 secondes ? (1 clic)</li>
+      <li>Une friction, une page — pas une liste, pas un audit ?</li>
+      <li>La friction est liée à la prochaine étape du client (decision-tied) ?</li>
+      <li>Le « recognizable reason » est un comportement, pas une phrase marketing ?</li>
+      <li>La « consequence mechanics » est une chaîne, pas un chiffre ?</li>
+      <li>Subject line = le micro-oui demandé dans l'email ?</li>
+      <li>Le CTA est UNE question de permission (pas de call demandé) ?</li>
+      <li>Sortie propre (« sinon on en restera là ») présente ?</li>
+      <li>Footer CASL : identification + désinscription + consent_basis loggé ?</li>
+      <li>Ça passerait le test « safe to forward en interne » ?</li>
+    </ul>
+  </div>
+
+  <!-- 6. OBJECTION -->
+  <div class="card">
+    <h2><span class="n">6</span>L'objection « nos clients rappellent toujours » (concessionnaires)</h2>
+    <div class="script">« Je vous crois — et c'est justement pour ça que je vous appelle. Un client qui rappelle, c'est un client qui a déjà choisi votre concession : c'est le lead le plus chaud de votre journée. Mon questionnement n'est pas sur le téléphone. C'est sur ceux qui ne rappellent pas : le visiteur qui remplit votre formulaire dimanche à 21h. Ceux-là, est-ce qu'ils rappellent ? »</div>
+    <div class="decision" style="margin-top:10px">Séquence : <b>Clarifier → Isoler → Recadrer → Confirmer</b>. L'objection = mauvaise lane, pas mauvais prix. Change de lane (digitale / overflow / suivi) ou sors proprement. Jamais de remise.</div>
+  </div>
+
+  <!-- 7. KPI -->
+  <div class="card">
+    <h2><span class="n">7</span>KPI de la semaine</h2>
+    <table>
+      <tr><th>Métrique</th><th>Cible</th><th>Ton résultat</th></tr>
+      <tr><td>Emails envoyés</td><td>10/jour → 50 max (rampe)</td><td style="color:var(--dim)">___</td></tr>
+      <tr><td>Taux de réponse</td><td>3-8 %</td><td style="color:var(--dim)">___</td></tr>
+      <tr><td>YES / réponses</td><td>20-40 %</td><td style="color:var(--dim)">___</td></tr>
+      <tr><td>Bounce rate</td><td>&lt; 2 %</td><td style="color:var(--dim)">___</td></tr>
+      <tr><td>Taux de skip (enrichissement)</td><td>&lt; 30 %</td><td style="color:var(--dim)">___</td></tr>
+      <tr><td>Appels concessionnaires</td><td>2-3 / semaine</td><td style="color:var(--dim)">___</td></tr>
+      <tr><td>Meetings bookés</td><td>1-2 / semaine</td><td style="color:var(--dim)">___</td></tr>
+    </table>
+  </div>
+
+  <p class="footer">Règle d'or : 1 friction · 1 page · 1 lane — sinon skip. Le prix ne descend jamais ; il change de lane ou on marche.</p>
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('#nicheScore input')];
+boxes.forEach(b=>b.addEventListener('change',()=>{
+  const n=boxes.filter(x=>x.checked).length;
+  document.getElementById('vGo').style.display=n>=4?'block':'none';
+  document.getElementById('vStop').style.display=n<4?'block':'none';
+}));
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { metaFor, SITE_URL } from '../../seo/meta';
 import {
   Globe, Palette, Code, Smartphone, CheckCircle, ArrowLeft,
   Search, Gauge, MapPin, Sparkles,
@@ -59,9 +60,10 @@ export const CreationSitesWeb: React.FC<CreationSitesWebProps> = ({ onOpenConsul
   return (
     <div className="min-h-screen bg-background pt-24 pb-16 text-foreground">
       <Helmet>
-        <title>Création Sites Web Sur Mesure au Québec - AIXPT</title>
-        <meta name="description" content="Création de sites web sur mesure au Québec par AIXPT Montréal. Design moderne, optimisation SEO et GEO pour PME de la province et Montréal." />
+        <title>{metaFor('/creation-sites-web')!.title}</title>
+        <meta name="description" content={metaFor('/creation-sites-web')!.description} />
         <meta name="keywords" content="création sites web Québec, développement web Montréal AIXPT, sites responsive Québec, SEO web province, agence web IA Québec" />
+        <link rel="canonical" href={`${SITE_URL}/creation-sites-web`} />
       </Helmet>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Back Button */}

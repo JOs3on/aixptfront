@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { metaFor, SITE_URL } from '../../seo/meta';
 import { Users, Lightbulb, Heart, MapPin, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AutomationFlow } from '../icons/BrandIcons';
@@ -36,15 +37,13 @@ export const About: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>À Propos d'AIXPT — Automatisation IA, Québec</title>
-        <meta
-          name="description"
-          content="AIXPT automatise les appels, emails et sites web des PME du Québec avec des agents IA — sans être un géant de la tech."
-        />
+        <title>{metaFor('/apropos')!.title}</title>
+        <meta name="description" content={metaFor('/apropos')!.description} />
         <meta
           name="keywords"
           content="AIXPT, automatisation IA, Québec, intelligence artificielle, PME Québec"
         />
+        <link rel="canonical" href={`${SITE_URL}/apropos`} />
       </Helmet>
 
       <div className="min-h-screen bg-background pb-16 pt-24 text-foreground">

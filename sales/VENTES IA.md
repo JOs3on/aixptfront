@@ -111,17 +111,20 @@ SUIVI JOUR 3
 "Salut \[NOM\], j'ai essayé de vous joindre plus tôt cette semaine après avoir remarqué la fuite de vos appels en dehors des heures d'ouverture. Je vous appelle pour voir si ça vaut la peine de prendre 2 minutes pour en jaser, ou si je ferme le dossier ici de mon côté ?"
 
 **YES FLOW:**  
-EMAIL: Objet : Prototype de réception automatisée \- Concession\[Nom de la concession\]
+EMAIL: Objet : Prototype de réception automatisée - Concession [Nom de la concession]
 
-Bonjour \[Nom\],
+Bonjour [Nom],
 
-Comme convenu, voici le lien vers le prototype audio.\[Lien URL\]
+Comme convenu, voici le lien vers le prototype en direct :
+https://aixpt.com/demo/[nom-de-la-concession]
 
-C'est un simple lien d'écoute de 45 secondes, il n'y a rien à télécharger. 
+Vous pouvez soit tester l'appel directement sur la page (WebRTC), soit écouter l'extrait audio de 45 secondes sans rien télécharger, ou composer directement notre ligne test au +1 (581) 807-8332.
 
 Je vous invite simplement à porter attention à la façon dont le système qualifie l'intention d'achat du client avant de prendre le rendez-vous. 
 
-Petite question rapide : Est-ce que récupérer les prospects qui appellent en dehors des heures d'ouverture est une priorité pour ce trimestre, ou c'est un projet pour plus tard ?\[Ton Nom\]
+Petite question rapide : Est-ce que récupérer les prospects qui appellent en dehors des heures d'ouverture est une priorité pour ce trimestre, ou c'est un projet pour plus tard ?
+
+[Ton Prénom]
 
 # Meeting
 

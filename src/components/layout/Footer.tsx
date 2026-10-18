@@ -20,6 +20,8 @@ const services = [
   { id: '/emails-automatises', label: 'Emails automatisés' },
   { id: '/agents-conversationnels', label: 'Agents conversationnels' },
   { id: '/creation-sites-web', label: 'Création de sites web' },
+  { id: '/receptionniste-ia-concessionnaires-automobiles', label: 'IA pour concessionnaires' },
+  { id: '/chatbot-ia-clinique', label: 'Chatbot pour cliniques' },
 ];
 
 const headingClass =
