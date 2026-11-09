@@ -13,16 +13,16 @@ interface Email {
 
 const EMAILS: Email[] = [
   {
-    from: 'Jean Tremblay',
-    initials: 'JT',
+    from: 'Client démo A',
+    initials: 'CA',
     subject: 'Annulation — chambre 204',
     tag: 'Urgent',
     time: '08:47',
     preview: 'Merci de bien vouloir annuler ma réservation…',
   },
   {
-    from: 'Julie Martin',
-    initials: 'JM',
+    from: 'Client démo B',
+    initials: 'CB',
     subject: 'Demande de réservation — 2 nuits',
     tag: 'Réservation',
     time: '09:12',
@@ -37,8 +37,8 @@ const EMAILS: Email[] = [
     preview: 'Profitez de -20 % sur les chambres supérieures…',
   },
   {
-    from: 'Caroline Bédard',
-    initials: 'CB',
+    from: 'Client démo C',
+    initials: 'CC',
     subject: 'Demande de réservation — chambre double',
     tag: 'Réservation',
     time: '09:52',
@@ -47,7 +47,7 @@ const EMAILS: Email[] = [
 ];
 
 const REPLY =
-  'Bonjour Mme Bédard, merci pour votre demande. Chambre double disponible du 14 au 16 — confirmation envoyée, paiement sécurisé en pièce jointe. À bientôt !';
+  'Bonjour, merci pour votre demande. Chambre double disponible du 14 au 16 — confirmation envoyée, paiement sécurisé en pièce jointe. À bientôt !';
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
@@ -122,7 +122,7 @@ const InboxMockup: React.FC = () => {
         <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
         <span className="ml-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          agent-email — inbox · Hôtel Le Château
+          agent-email — inbox · Hôtel démo
         </span>
         <span className="ml-auto font-mono text-[10px] text-muted-foreground">12 emails · 3 min</span>
       </div>

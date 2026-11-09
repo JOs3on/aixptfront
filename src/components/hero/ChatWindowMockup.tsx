@@ -13,7 +13,7 @@ const FLOW: FlowEvent[] = [
   { kind: 'msg', role: 'client', text: "Bonjour, j'aurais besoin d'aide pour une séparation." },
   { kind: 'msg', role: 'agent', text: 'Je comprends. Depuis combien de temps êtes-vous mariés ?', think: 900 },
   { kind: 'msg', role: 'client', text: '12 ans, avec deux enfants.' },
-  { kind: 'msg', role: 'agent', text: 'Merci. Je vous propose une consultation avec Me Bergeron, mercredi à 14 h.', think: 1000 },
+  { kind: 'msg', role: 'agent', text: "Merci. Je vous propose une consultation avec un avocat de l'équipe, mercredi à 14 h.", think: 1000 },
   { kind: 'system', text: 'Profil qualifié — dossier divorce' },
   { kind: 'system', text: 'Consultation proposée — mer. 14 h · CRM mis à jour' },
 ];
@@ -87,7 +87,7 @@ const ChatWindowMockup: React.FC = () => {
         <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
         <span className="ml-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          chatbot — web · Cabinet Lefebvre
+          chatbot — web · Cabinet juridique (démo)
         </span>
         <span className="ml-auto font-mono text-[10px] text-muted-foreground">38 s</span>
       </div>

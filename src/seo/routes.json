@@ -10,8 +10,8 @@
     },
     {
       "path": "/services",
-      "title": "Services d'automatisation IA au Québec | AIXPT",
-      "description": "Assistants vocaux, agents conversationnels, emails automatisés et création de sites web optimisés SEO — des solutions IA sur mesure pour les entreprises du Québec.",
+      "title": "Services d'agents IA et chatbots au Québec | AIXPT",
+      "description": "Réceptionniste IA, agents conversationnels et création de sites web optimisés SEO — plus l'automatisation des courriels. Solutions IA sur mesure au Québec.",
       "changefreq": "monthly",
       "priority": "0.9"
     },
@@ -44,11 +44,32 @@
       "priority": "0.8"
     },
     {
+      "path": "/chatbot-ia-avocats",
+      "title": "Chatbot IA pour avocats et cabinets juridiques | AIXPT",
+      "description": "Chatbot IA pour avocats : qualification des demandes, réponses administratives et prise de consultation 24/7. Conçu pour les cabinets juridiques du Québec.",
+      "changefreq": "monthly",
+      "priority": "0.8"
+    },
+    {
+      "path": "/receptionniste-ia-chauffage-climatisation",
+      "title": "Réceptionniste IA chauffage et climatisation | AIXPT",
+      "description": "Réceptionniste IA pour entreprises de chauffage et climatisation : urgences, zones desservies et rendez-vous techniciens 24/7. Conçue pour le Québec.",
+      "changefreq": "monthly",
+      "priority": "0.8"
+    },
+    {
       "path": "/contact",
       "title": "Contactez AIXPT — consultation IA gratuite | Québec",
       "description": "Parlez à un expert en automatisation IA au Québec. Consultation sans engagement pour votre réceptionniste IA, votre chatbot ou vos processus.",
       "changefreq": "monthly",
       "priority": "0.8"
+    },
+    {
+      "path": "/politique-de-confidentialite",
+      "title": "Politique de confidentialité | AIXPT",
+      "description": "Politique de confidentialité d'AIXPT : renseignements collectés, utilisation, témoins, fournisseurs, conservation et droits des personnes au Québec.",
+      "changefreq": "yearly",
+      "priority": "0.3"
     },
     {
       "path": "/apropos",

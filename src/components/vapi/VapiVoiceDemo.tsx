@@ -1,23 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   Phone, 
   PhoneOff, 
   Mic, 
   MicOff, 
-  Send, 
-  Sparkles, 
-  Volume2, 
-  Play, 
-  Pause, 
-  RotateCcw,
-  Headphones,
-  CheckCircle2,
+  Send,
+  Sparkles,
+  ListChecks,
   Calendar,
   MessageSquare,
   AlertCircle
 } from 'lucide-react';
-import { getVapiClient, VAPI_CONFIG } from '../../lib/vapi';
+import { getVapiClient, VAPI_DEMOS, formatPhoneNumber } from '../../lib/vapi';
 import { Button } from '../ui/button';
 
 interface Message {
@@ -30,28 +25,40 @@ interface VapiVoiceDemoProps {
   onOpenConsultation?: () => void;
   agentId?: string;
   clientTitle?: string;
+  /** E.164 number assigned to the assistant. Empty hides the phone card. */
+  phoneNumber?: string;
+  formattedPhoneNumber?: string;
+  suggestedQuestions?: string[];
+  agentRole?: string;
+  /** First assistant bubble in the live transcript. */
+  openingMessage?: string;
 }
 
-const SUGGESTED_QUESTIONS = [
+const DEFAULT_SUGGESTED_QUESTIONS = [
   "Avez-vous le VUS 2023 toujours disponible ?",
   "Est-ce possible de réserver un essai routier samedi ?",
   "Quelles sont vos heures d'ouverture aujourd'hui ?",
   "Reprenez-vous mon ancien véhicule en échange ?"
 ];
 
-const FALLBACK_TRANSCRIPT: { role: 'caller' | 'agent'; text: string; time: string }[] = [
-  { role: 'caller', text: "Bonjour, j'aimerais savoir si le VUS noir 2023 est toujours disponible pour un essai routier ?", time: "00:03" },
-  { role: 'agent', text: "Bonjour ! Oui, le VUS 2023 est actuellement en concession et prêt pour un essai. À quel moment préférez-vous passer ?", time: "00:12" },
-  { role: 'caller', text: "Ce samedi vers 11 h, est-ce que ce serait possible ?", time: "00:20" },
-  { role: 'agent', text: "Parfait pour samedi à 11 h 00. Afin de préparer le véhicule et vous assigner un conseiller, puis-je avoir votre prénom et numéro de cellulaire ?", time: "00:32" },
-  { role: 'caller', text: "Marc Tremblay, 514-555-0199.", time: "00:39" },
-  { role: 'agent', text: "C'est noté M. Tremblay ! Votre essai routier est confirmé pour samedi 11 h. La confirmation arrive par texto. À samedi !", time: "00:44" }
-];
+interface VapiTranscriptMessage {
+  type?: string;
+  role?: string;
+  transcript?: string;
+  transcriptType?: string;
+}
 
 export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
   onOpenConsultation,
-  agentId = VAPI_CONFIG.concessionnaireAgentId,
-  clientTitle = "Concession Automobile — Démo IA"
+  agentId = VAPI_DEMOS.concessionnaire.agentId,
+  clientTitle = "Concession Automobile — Démo IA",
+  phoneNumber = VAPI_DEMOS.concessionnaire.phoneNumber,
+  formattedPhoneNumber = phoneNumber
+    ? formatPhoneNumber(phoneNumber)
+    : VAPI_DEMOS.concessionnaire.formattedPhoneNumber,
+  suggestedQuestions = DEFAULT_SUGGESTED_QUESTIONS,
+  agentRole = 'Réceptionniste virtuelle',
+  openingMessage = "Bonjour ! Je suis l'assistante virtuelle de la concession. Comment puis-je vous aider aujourd'hui ?",
 }) => {
   // Call state
   const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'connected' | 'error'>('idle');
@@ -65,25 +72,21 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Bonjour ! Je suis l'assistante virtuelle de la concession. Comment puis-je vous aider aujourd'hui ?",
+      content: openingMessage,
       time: "Maintenant"
     }
   ]);
   const [textInput, setTextInput] = useState('');
   const [isSendingText, setIsSendingText] = useState(false);
 
-  // Fallback Audio Player State
-  const [isPlayingFallback, setIsPlayingFallback] = useState(false);
-  const [fallbackTime, setFallbackTime] = useState(0);
-  const fallbackDuration = 45; // 45 seconds
-
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const fallbackTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll messages
+  // Auto-scroll the transcript container only — never the page.
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -132,12 +135,13 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
       setVolumeLevel(volume);
     };
 
-    const handleMessage = (msg: any) => {
+    const handleMessage = (rawMessage: unknown) => {
+      const msg = rawMessage as VapiTranscriptMessage;
       if (msg.type === 'transcript') {
         const role = msg.role === 'assistant' ? 'assistant' : 'user';
-        const transcriptText = msg.transcript;
+        const transcriptText = msg.transcript?.trim();
         
-        if (msg.transcriptType === 'final' && transcriptText?.trim()) {
+        if (msg.transcriptType === 'final' && transcriptText) {
           const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           setMessages((prev) => {
             // Avoid duplicate identical consecutive messages
@@ -151,13 +155,15 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
       }
     };
 
-    const handleError = (error: any) => {
+    const handleError = (error: unknown) => {
       console.error('Vapi error:', error);
-      setErrorMessage(
-        typeof error === 'string' 
-          ? error 
-          : error?.message || "Erreur de connexion. Vous pouvez poser une question par texte ou composer le numéro direct."
-      );
+      const message =
+        typeof error === 'string'
+          ? error
+          : error && typeof error === 'object' && 'message' in error
+            ? String((error as { message: unknown }).message)
+            : "Erreur de connexion. Vous pouvez poser une question par texte ou composer le numéro direct.";
+      setErrorMessage(message);
       setCallStatus('idle');
     };
 
@@ -184,6 +190,11 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
 
   // Start WebRTC Call
   const startCall = async (initialMuted = false) => {
+    if (!agentId) {
+      setErrorMessage("La démo vocale n'est pas encore configurée pour ce secteur.");
+      return;
+    }
+
     try {
       setErrorMessage(null);
       setCallStatus('connecting');
@@ -195,7 +206,7 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
       } else {
         setIsMuted(false);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Failed to start call:', err);
       setErrorMessage("Microphone non disponible. Vous pouvez poser une question par écrit ci-dessous.");
       setCallStatus('idle');
@@ -224,6 +235,11 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
     const query = (textToSend || textInput).trim();
     if (!query) return;
 
+    if (!agentId) {
+      setErrorMessage("La démo vocale n'est pas encore configurée pour ce secteur.");
+      return;
+    }
+
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     setMessages((prev) => [...prev, { role: 'user', content: query, time: now }]);
     setTextInput('');
@@ -249,38 +265,12 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
         },
         triggerResponseEnabled: true
       });
-    } catch (err: any) {
+    } catch (err) {
       console.error('Failed to send text message to Vapi:', err);
       setErrorMessage("Impossible d'envoyer le message. Vous pouvez lancer l'appel direct.");
     } finally {
       setIsSendingText(false);
     }
-  };
-
-  // Fallback Audio Simulation (synthetic preview of the 45s audio)
-  const toggleFallbackAudio = () => {
-    if (isPlayingFallback) {
-      if (fallbackTimerRef.current) clearInterval(fallbackTimerRef.current);
-      setIsPlayingFallback(false);
-    } else {
-      setIsPlayingFallback(true);
-      fallbackTimerRef.current = setInterval(() => {
-        setFallbackTime((prev) => {
-          if (prev >= fallbackDuration) {
-            if (fallbackTimerRef.current) clearInterval(fallbackTimerRef.current);
-            setIsPlayingFallback(false);
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000);
-    }
-  };
-
-  const resetFallbackAudio = () => {
-    if (fallbackTimerRef.current) clearInterval(fallbackTimerRef.current);
-    setIsPlayingFallback(false);
-    setFallbackTime(0);
   };
 
   return (
@@ -295,9 +285,17 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
           Testez l'Assistante Vocale en Direct
         </h2>
         <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-          Découvrez comment notre réceptionniste IA répond instantanément, qualifie l'intention d'achat et réserve des essais routiers sans aucun humain.
+          Découvrez comment notre réceptionniste IA répond instantanément, qualifie la demande
+          et fixe un rendez-vous — sans aucun humain.
         </p>
       </div>
+
+      {!agentId && (
+        <div className="mx-auto mb-6 max-w-2xl rounded-2xl border border-amber-400/20 bg-amber-400/[0.06] px-4 py-3 text-center text-xs leading-relaxed text-amber-100">
+          La démo vocale n'est pas encore configurée pour ce secteur. Le clavardage et la démo
+          téléphonique restent disponibles dès qu'une ligne est attribuée.
+        </div>
+      )}
 
       {/* Main Console Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -337,7 +335,7 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
                 </div>
                 <h3 className="font-display text-xl font-bold text-white">{clientTitle}</h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Réceptionniste Virtuelle Spécialisée en Concession
+                  Agent vocal IA · {agentRole}
                 </p>
               </div>
 
@@ -371,7 +369,9 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
                   </>
                 ) : (
                   <div className="text-center text-xs text-muted-foreground">
-                    Cliquez sur le bouton ci-dessous pour démarrer l'appel avec le micro de votre appareil.
+                    {agentId
+                      ? "Cliquez sur le bouton ci-dessous pour démarrer l'appel avec le micro de votre appareil."
+                      : "Cette démo vocale sera activée dès qu'un assistant et une ligne seront attribués à ce secteur."}
                   </div>
                 )}
               </div>
@@ -381,10 +381,11 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
                 {callStatus === 'idle' && (
                   <Button
                     onClick={() => startCall(false)}
-                    className="w-full max-w-xs rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-600 transition-all hover:scale-[1.02]"
+                    disabled={!agentId}
+                    className="w-full max-w-xs rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-600 transition-all hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
                   >
                     <Phone className="mr-2 h-5 w-5" />
-                    Démarrer l'Appel en Direct
+                    {agentId ? "Démarrer l'Appel en Direct" : 'Démo bientôt disponible'}
                   </Button>
                 )}
 
@@ -434,7 +435,7 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
               )}
 
               {/* Live Transcript Bubble Box */}
-              <div className="rounded-xl border border-white/5 bg-black/40 p-3 max-h-48 overflow-y-auto space-y-2.5 text-xs">
+              <div ref={messagesContainerRef} className="rounded-xl border border-white/5 bg-black/40 p-3 max-h-48 overflow-y-auto space-y-2.5 text-xs">
                 <div className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground border-b border-white/5 pb-1">
                   Transcription en direct
                 </div>
@@ -457,7 +458,6 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
                     )}
                   </div>
                 ))}
-                <div ref={messagesEndRef} />
               </div>
 
               {/* Text Input Option ("Or type a question and agent speaks") */}
@@ -478,7 +478,7 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
                     type="text"
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}
-                    placeholder="Ex: Avez-vous le VUS noir disponible samedi ?"
+                    placeholder="Posez votre question…"
                     className="flex-1 rounded-xl border border-white/10 bg-zinc-900/80 px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-brand"
                   />
                   <Button
@@ -492,7 +492,7 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
 
                 {/* Prompt suggestions pills */}
                 <div className="mt-3 flex flex-wrap gap-1.5">
-                  {SUGGESTED_QUESTIONS.map((q, idx) => (
+                  {suggestedQuestions.map((q, idx) => (
                     <button
                       key={idx}
                       type="button"
@@ -509,104 +509,92 @@ export const VapiVoiceDemo: React.FC<VapiVoiceDemoProps> = ({
           </div>
         </div>
 
-        {/* Right Side: Twilio Direct Phone + 45s Pre-recorded Fallback + Meeting Bridge (5 cols) */}
+        {/* Right Side: Direct phone + testing instructions + meeting bridge (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
 
-          {/* Option 2: Real Phone Call via Twilio */}
-          <div className="rounded-2xl border border-white/10 bg-[#15151a] p-6 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-3xl pointer-events-none" />
-            
-            <div className="flex items-center gap-2 mb-2 text-xs font-mono uppercase tracking-wider text-brand">
-              <Phone className="w-3.5 h-3.5" />
-              Testez depuis votre Cellulaire
-            </div>
-            
-            <h4 className="font-display text-lg font-bold text-white mb-2">
-              Composez le Numéro Direct
-            </h4>
-            
-            <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-              Vous voulez entendre exactement comment sonne l'agent sur le réseau téléphonique québécois ?
-            </p>
+          {/* Option 2: Real Phone Call */}
+          {phoneNumber && (
+            <div className="rounded-2xl border border-white/10 bg-[#15151a] p-6 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-3xl pointer-events-none" />
 
-            <a
-              href={`tel:${VAPI_CONFIG.phoneNumber}`}
-              className="flex items-center justify-between rounded-xl border border-brand/30 bg-brand/10 hover:bg-brand/20 p-3.5 transition-all group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand text-white shadow-md">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">Ligne directe (sans attente)</div>
-                  <div className="font-mono text-base font-bold text-white group-hover:text-brand transition-colors">
-                    {VAPI_CONFIG.formattedPhoneNumber}
+              <div className="flex items-center gap-2 mb-2 text-xs font-mono uppercase tracking-wider text-brand">
+                <Phone className="w-3.5 h-3.5" />
+                Testez depuis votre cellulaire
+              </div>
+
+              <h4 className="font-display text-lg font-bold text-white mb-2">
+                Composez le numéro direct
+              </h4>
+
+              <p className="text-xs text-muted-foreground leading-relaxed mb-4">
+                Vous voulez entendre exactement comment sonne l'agent sur le réseau téléphonique québécois ?
+              </p>
+
+              <a
+                href={`tel:${phoneNumber}`}
+                className="flex items-center justify-between rounded-xl border border-brand/30 bg-brand/10 hover:bg-brand/20 p-3.5 transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand text-white shadow-md">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-muted-foreground">Ligne directe (sans attente)</div>
+                    <div className="whitespace-nowrap font-mono text-[13px] font-bold text-white group-hover:text-brand transition-colors">
+                      {formattedPhoneNumber}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <span className="text-xs font-semibold text-brand">Appeler →</span>
-            </a>
-          </div>
+                <span className="shrink-0 text-xs font-semibold text-brand">Appeler →</span>
+              </a>
+            </div>
+          )}
 
-          {/* Option 3: Fallback Audio Extrait 45s */}
+          {/* How to test — replaces the old pre-recorded "proof proxy" card */}
           <div className="rounded-2xl border border-white/10 bg-[#15151a] p-6 shadow-xl">
             <div className="flex items-center gap-2 mb-2 text-xs font-mono uppercase tracking-wider text-zinc-400">
-              <Headphones className="w-3.5 h-3.5 text-brand" />
-              Proof Proxy — Sans Téléchargement
+              <ListChecks className="w-3.5 h-3.5 text-brand" />
+              Comment tester
             </div>
 
-            <h4 className="font-display text-lg font-bold text-white mb-1">
-              Extrait d'un Appel Type (45 s)
+            <h4 className="font-display text-lg font-bold text-white mb-3">
+              Trois façons de l'essayer
             </h4>
 
-            <p className="text-xs text-muted-foreground mb-4">
-              Écoutez la qualification complète d'un client samedi matin sans activer votre micro.
+            <ol className="space-y-3 text-xs leading-relaxed text-muted-foreground">
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-brand/30 bg-brand/10 text-[10px] font-bold text-brand">
+                  1
+                </span>
+                <span>
+                  <strong className="text-zinc-200">Appel dans le navigateur.</strong> Cliquez sur
+                  « Démarrer l'appel en direct », puis parlez naturellement.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-brand/30 bg-brand/10 text-[10px] font-bold text-brand">
+                  2
+                </span>
+                <span>
+                  <strong className="text-zinc-200">Question écrite.</strong> Tapez votre question ou
+                  choisissez une suggestion : l'agent répondra à voix haute.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-brand/30 bg-brand/10 text-[10px] font-bold text-brand">
+                  3
+                </span>
+                <span>
+                  <strong className="text-zinc-200">Votre téléphone.</strong> Composez la ligne
+                  directe pour entendre l'expérience sur le réseau téléphonique.
+                </span>
+              </li>
+            </ol>
+
+            <p className="mt-4 border-t border-white/5 pt-3 text-[10px] leading-relaxed text-zinc-500">
+              Démo publique : utilisez un prénom et un numéro fictifs. Aucun message n'est transmis à
+              un humain.
             </p>
-
-            {/* Audio Player Bar */}
-            <div className="rounded-xl border border-white/5 bg-zinc-900 p-4">
-              <div className="flex items-center justify-between gap-4 mb-2">
-                <Button
-                  onClick={toggleFallbackAudio}
-                  size="icon"
-                  className="h-10 w-10 rounded-full bg-brand hover:bg-brand-hover text-white flex-shrink-0"
-                >
-                  {isPlayingFallback ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
-                </Button>
-
-                {/* Progress bar */}
-                <div className="flex-1">
-                  <div className="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-brand to-[#c4a6ff] transition-all duration-300"
-                      style={{ width: `${(fallbackTime / fallbackDuration) * 100}%` }}
-                    />
-                  </div>
-                  <div className="flex justify-between text-[10px] text-zinc-500 font-mono mt-1">
-                    <span>{formatTime(fallbackTime)}</span>
-                    <span>{formatTime(fallbackDuration)}</span>
-                  </div>
-                </div>
-
-                <Button
-                  onClick={resetFallbackAudio}
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-zinc-400 hover:text-white"
-                  title="Recommencer"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                </Button>
-              </div>
-
-              {/* Script dialogue sample */}
-              <div className="mt-3 text-[11px] text-zinc-400 space-y-1.5 border-t border-white/5 pt-3">
-                <div className="font-medium text-white text-xs mb-1">Scénario de l'extrait :</div>
-                <div>• Le client demande la disponibilité d'un VUS 2023.</div>
-                <div>• L'IA confirme l'inventaire et qualifie l'heure de visite.</div>
-                <div>• Prise de rendez-vous confirmée avec coordonnées et SMS.</div>
-              </div>
-            </div>
           </div>
 
           {/* Bridge to Appointment / Next Step */}

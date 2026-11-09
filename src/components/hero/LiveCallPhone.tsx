@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import { Phone, CalendarCheck2, Database } from 'lucide-react';
 
-const SCRIPT: { role: 'caller' | 'agent'; text: string }[] = [
+export interface CallScriptMessage {
+  role: 'caller' | 'agent';
+  text: string;
+}
+
+const DEFAULT_SCRIPT: CallScriptMessage[] = [
   { role: 'caller', text: "Bonjour, j'aimerais réserver une table pour quatre." },
   { role: 'agent', text: 'Bien sûr ! À quelle heure préférez-vous ?' },
   { role: 'caller', text: '19 h 30, si possible.' },
@@ -13,12 +18,22 @@ const SCRIPT: { role: 'caller' | 'agent'; text: string }[] = [
 
 const BARS = [0, 1, 2, 3, 4];
 
+interface LiveCallPhoneProps {
+  businessLabel?: string;
+  script?: CallScriptMessage[];
+  confirmationLabel?: string;
+}
+
 /**
  * LiveCallPhone — the full "call in progress" phone mockup.
  * Plays a sliding-window live transcript while in view; pauses off-screen.
  * Self-contained so it can be embedded anywhere (section or page).
  */
-export const LiveCallPhone: React.FC = () => {
+export const LiveCallPhone: React.FC<LiveCallPhoneProps> = ({
+  businessLabel = 'Restaurant démo',
+  script = DEFAULT_SCRIPT,
+  confirmationLabel = 'Réservation confirmée — 19 h 30',
+}) => {
   const prefersReduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: false, amount: 0.3 });
@@ -28,12 +43,12 @@ export const LiveCallPhone: React.FC = () => {
   useEffect(() => {
     if (prefersReduced || !inView) return;
     const id = setInterval(() => {
-      setCount((c) => (c >= SCRIPT.length ? 3 : c + 1));
+      setCount((c) => (c >= script.length ? 3 : c + 1));
     }, 1800);
     return () => clearInterval(id);
-  }, [prefersReduced, inView]);
+  }, [prefersReduced, inView, script.length]);
 
-  const visible = SCRIPT.slice(count - 3, count);
+  const visible = script.slice(count - 3, count);
 
   return (
     <div ref={ref} className="relative mx-auto w-[300px] sm:w-[320px]">
@@ -69,7 +84,7 @@ export const LiveCallPhone: React.FC = () => {
               Agent Vocal AIXPT
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Boulangerie Martin · Appel entrant
+              {businessLabel} · Appel entrant
             </p>
             <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-emerald-300">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -126,7 +141,7 @@ export const LiveCallPhone: React.FC = () => {
             <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5">
               <CalendarCheck2 className="h-4 w-4 flex-shrink-0 text-emerald-400" />
               <span className="text-[11px] text-foreground/80">
-                Réservation confirmée — 19 h 30
+                {confirmationLabel}
               </span>
             </div>
             <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5">

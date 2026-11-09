@@ -16,6 +16,19 @@ Langue : Français (Québec) et anglais. Zone desservie : Québec, Canada.
 
 - [Réceptionniste IA pour concessionnaires automobiles](https://www.aixpt.ca/receptionniste-ia-concessionnaires-automobiles): répondre à tous les appels, qualifier les leads et remplir l'agenda du service, 24/7.
 - [Chatbot IA pour cliniques et cabinets](https://www.aixpt.ca/chatbot-ia-clinique): prise de rendez-vous, réponses aux questions fréquentes et rappels automatiques.
+- [Chatbot IA pour avocats et cabinets juridiques](https://www.aixpt.ca/chatbot-ia-avocats): qualification des demandes, réponses administratives et prise de consultation.
+- [Réceptionniste IA pour chauffage et climatisation](https://www.aixpt.ca/receptionniste-ia-chauffage-climatisation): urgences, zones desservies et rendez-vous techniciens 24/7.
+
+## Démos à envoyer aux prospects
+
+- [Choisir une démo](https://www.aixpt.ca/demo): page interne qui permet de choisir le secteur et le format.
+- [Démo vocale — concessionnaires](https://www.aixpt.ca/demo/voice/concessionnaires#demo)
+- [Démo vocale — clinique dentaire](https://www.aixpt.ca/demo/voice/dentaire#demo)
+- [Démo vocale — chauffage et climatisation](https://www.aixpt.ca/demo/voice/hvac#demo)
+- [Démo clavardage — concessionnaires](https://www.aixpt.ca/demo/chat/concessionnaires#demo)
+- [Démo clavardage — clinique dentaire](https://www.aixpt.ca/demo/chat/dentaire#demo)
+- [Démo clavardage — chauffage et climatisation](https://www.aixpt.ca/demo/chat/hvac#demo)
+- [Démo clavardage — avocats](https://www.aixpt.ca/demo/chat/avocats#demo)
 
 ## À propos
 
@@ -24,4 +37,5 @@ Langue : Français (Québec) et anglais. Zone desservie : Québec, Canada.
 
 ## Optional
 
+- [Politique de confidentialité](https://www.aixpt.ca/politique-de-confidentialite)
 - [Plan du site](https://www.aixpt.ca/sitemap.xml)

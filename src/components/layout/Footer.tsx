@@ -17,11 +17,13 @@ const navigation = [
 
 const services = [
   { id: '/assistant-vocal', label: 'Assistant vocal IA' },
-  { id: '/emails-automatises', label: 'Emails automatisés' },
   { id: '/agents-conversationnels', label: 'Agents conversationnels' },
   { id: '/creation-sites-web', label: 'Création de sites web' },
+  { id: '/emails-automatises', label: 'Emails automatisés' },
   { id: '/receptionniste-ia-concessionnaires-automobiles', label: 'IA pour concessionnaires' },
   { id: '/chatbot-ia-clinique', label: 'Chatbot pour cliniques' },
+  { id: '/chatbot-ia-avocats', label: 'Chatbot pour avocats' },
+  { id: '/receptionniste-ia-chauffage-climatisation', label: 'IA chauffage et climatisation' },
 ];
 
 const headingClass =
@@ -131,6 +133,20 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
           <p className="text-xs text-muted-foreground">
             © {year} AIXPT — Tous droits réservés.
           </p>
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+            <Link
+              to="/politique-de-confidentialite"
+              className="transition-colors duration-200 hover:text-white"
+            >
+              Confidentialité
+            </Link>
+            <Link
+              to="/politique-de-confidentialite#cookies"
+              className="transition-colors duration-200 hover:text-white"
+            >
+              Témoins
+            </Link>
+          </div>
           <p className="text-xs text-muted-foreground">
             Automatisation intelligente · Québec, Canada
           </p>

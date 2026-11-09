@@ -25,6 +25,7 @@ dist-ssr
 .env
 .vercel
 .env*
+!.env.example
 
 # Playbook de prospection (usage interne — non versionné)
 sales/playbook/

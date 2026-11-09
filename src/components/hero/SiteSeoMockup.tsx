@@ -80,7 +80,7 @@ const SiteSeoMockup: React.FC = () => {
         <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
         <span className="ml-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          site-web — cabinetjoly.ca
+          site-web — cabinet-demo.ca
         </span>
         <span className="ml-auto flex items-center gap-1.5 font-mono text-[10px] text-brand">
           <span
@@ -147,11 +147,11 @@ const SiteSeoMockup: React.FC = () => {
                   C
                 </span>
                 <span className="truncate font-mono text-[9px] text-emerald-300">
-                  cabinetjoly.ca
+                  cabinet-demo.ca
                 </span>
               </div>
               <p className="mt-1.5 text-[11px] font-semibold text-white">
-                Cabinet Joly — Notaire à Montréal
+                Cabinet juridique — démo
               </p>
               <div className="mt-1.5 space-y-1">
                 <span className="block h-1 w-full rounded-full bg-white/10" />

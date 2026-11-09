@@ -33,7 +33,7 @@ const useCases: UseCase[] = [
     description:
       'Qualification rapide des clients et collecte intelligente vers une base de données toujours à jour, directement depuis votre site.',
     keywords: ['Qualification rapide', 'Collecte intelligente', 'Base de données à jour'],
-    to: '/agents-conversationnels',
+    to: '/chatbot-ia-avocats',
   },
   {
     id: 'agent-email',

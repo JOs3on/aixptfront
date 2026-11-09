@@ -2,17 +2,42 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { metaFor, SITE_URL } from '../../seo/meta';
-import { MessageCircle, Users, Sparkles, CheckCircle, ArrowLeft } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import {
+  MessageCircle,
+  Users,
+  Sparkles,
+  CheckCircle,
+  ArrowLeft,
+  HeartPulse,
+  Scale,
+} from 'lucide-react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { Button } from '../ui/button';
 import ChatWindowMockup from '../hero/ChatWindowMockup';
+import { NicheChatWidget } from '../chat/NicheChatWidget';
+import { NicheSwitcher } from '../demo/NicheSwitcher';
+import { PUBLIC_NICHES, resolveClientTitle } from '../../data/niches/public';
+import { buildShortDemoPath, resolveNicheFromUrl } from '../../data/niches/demoLinks';
 
 interface AgentsConversationnelsProps {
   onOpenConsultation: () => void;
 }
 
-export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ onOpenConsultation }) => {
+export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({
+  onOpenConsultation,
+}) => {
   const navigate = useNavigate();
+  const { nicheSlug, clientSlug } = useParams<{
+    nicheSlug?: string;
+    clientSlug?: string;
+  }>();
+
+  const nicheId = resolveNicheFromUrl(nicheSlug) ?? 'concessionnaire';
+  const niche = PUBLIC_NICHES[nicheId];
+  const clientTitle = resolveClientTitle(nicheId, clientSlug);
+  const isNicheVariant = Boolean(nicheSlug);
+  const meta = metaFor('/agents-conversationnels')!;
+
   const functionalities = [
     'Conversations naturelles multi-langues',
     'Apprentissage continu des interactions',
@@ -31,12 +56,22 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
     'Collecte intelligente de feedback client',
   ];
 
+  const scrollToDemo = () => {
+    document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <div className="min-h-screen bg-background pt-24 pb-16 text-foreground">
       <Helmet>
-        <title>{metaFor('/agents-conversationnels')!.title}</title>
-        <meta name="description" content={metaFor('/agents-conversationnels')!.description} />
-        <meta name="keywords" content="chatbot IA site web, agent conversationnel, chatbot entreprise, support client IA, clavardage IA, agents conversationnels Québec" />
+        <title>
+          {isNicheVariant ? `Démo ${niche.name} — ${meta.title}` : meta.title}
+        </title>
+        <meta name="description" content={meta.description} />
+        <meta
+          name="keywords"
+          content="chatbot IA site web, agent conversationnel, chatbot entreprise, support client IA, clavardage IA, agents conversationnels Québec"
+        />
+        {isNicheVariant && <meta name="robots" content="noindex, follow" />}
         <link rel="canonical" href={`${SITE_URL}/agents-conversationnels`} />
       </Helmet>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -70,6 +105,12 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
             </div>
           </div>
 
+          {isNicheVariant && (
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-brand">
+              Démo · {niche.name}
+            </div>
+          )}
+
           <h1 className="font-display text-4xl font-semibold tracking-[-0.02em] md:text-6xl">
             <span className="text-brand">Chatbot IA &amp; Agents Conversationnels</span>
             <br />
@@ -98,6 +139,81 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
             </p>
           </div>
           <ChatWindowMockup />
+        </motion.div>
+
+        {/* Live chatbot demo */}
+        <motion.div
+          id="demo"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mb-20 scroll-mt-24"
+        >
+          <NicheSwitcher
+            kind="chat"
+            activeNiche={nicheId}
+            className="mb-5"
+          />
+
+          <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_440px] xl:gap-12">
+            <div className="rounded-[2rem] border border-white/10 bg-card/70 p-6 sm:p-8">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                Démo fonctionnelle
+              </div>
+
+              <h2 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white sm:text-3xl">
+                Testez le chatbot maintenant
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                Choisissez un secteur, puis posez une question comme le ferait un vrai client. Le
+                chatbot répond en deux phrases, qualifie la demande et propose un rendez-vous.
+              </p>
+
+              <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
+                <li className="flex items-start">
+                  <CheckCircle className="mr-3 mt-0.5 h-4 w-4 flex-shrink-0 text-brand" />
+                  Aucune installation ni compte requis
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="mr-3 mt-0.5 h-4 w-4 flex-shrink-0 text-brand" />
+                  Réponses en français québécois, 24/7
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="mr-3 mt-0.5 h-4 w-4 flex-shrink-0 text-brand" />
+                  Utilisez un prénom et un numéro fictifs
+                </li>
+              </ul>
+
+              <Button
+                onClick={onOpenConsultation}
+                variant="outline"
+                className="mt-6 rounded-full border-white/15 bg-transparent px-5 py-2.5 text-xs font-semibold text-white hover:bg-white/5"
+              >
+                Réserver 15 minutes
+              </Button>
+
+              <div className="mt-8 rounded-2xl border border-white/10 bg-black/20 p-4">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-500">
+                  Lien à partager
+                </p>
+                <p className="mt-2 break-all font-mono text-[11px] text-zinc-400">
+                  {`aixpt.ca/agents-conversationnels/${nicheUrlSlug(niche.id)}`}
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">
+                  Le sélecteur de secteur ci-dessus change l'URL : copiez-la pour envoyer directement
+                  la bonne démo à un prospect.
+                </p>
+              </div>
+            </div>
+
+            <NicheChatWidget
+              key={`${nicheId}-${clientTitle}`}
+              niche={niche}
+              clientTitle={clientTitle}
+              className="lg:shadow-[0_40px_90px_-30px_rgba(0,0,0,0.95)]"
+            />
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
@@ -158,17 +274,20 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
           </motion.div>
         </div>
 
-        {/* Sector cross-link */}
+        {/* Sector cross-links */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-12"
+          className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2"
         >
           <Link
             to="/chatbot-ia-clinique"
             className="block rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
           >
+            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+              <HeartPulse className="h-5 w-5" />
+            </div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
               Solution sectorielle
             </p>
@@ -176,11 +295,33 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
               Vous gérez une clinique ou un cabinet ?
             </h3>
             <p className="mt-2 text-muted-foreground">
-              Découvrez notre chatbot IA conçu pour les cliniques : prise de rendez-vous, réponses
-              aux questions fréquentes et rappels automatiques.
+              Chatbot IA conçu pour les cliniques : prise de rendez-vous, réponses aux questions
+              fréquentes et rappels automatiques.
             </p>
             <span className="mt-3 inline-flex items-center text-sm font-medium text-brand">
               Voir la solution pour cliniques
+            </span>
+          </Link>
+
+          <Link
+            to="/chatbot-ia-avocats"
+            className="block rounded-xl border border-white/10 bg-card/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-card"
+          >
+            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+              <Scale className="h-5 w-5" />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+              Solution sectorielle
+            </p>
+            <h3 className="mt-2 font-display text-xl font-semibold text-white">
+              Vous êtes un cabinet juridique ?
+            </h3>
+            <p className="mt-2 text-muted-foreground">
+              Chatbot IA pour avocats : qualification des demandes, prise de consultation et
+              réponses administratives, 24/7.
+            </p>
+            <span className="mt-3 inline-flex items-center text-sm font-medium text-brand">
+              Voir la solution pour avocats
             </span>
           </Link>
         </motion.div>
@@ -200,11 +341,11 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({ 
               Découvrez comment nos agents IA peuvent transformer votre service client
             </p>
             <Button
-              onClick={onOpenConsultation}
+              onClick={scrollToDemo}
               className="rounded-full bg-brand px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_10px_30px_rgba(154,107,255,0.35)]"
             >
               <Sparkles className="mr-2 h-5 w-5" />
-              Voir une Démonstration
+              Tester la démo
             </Button>
           </div>
         </motion.div>
