@@ -198,11 +198,11 @@ export const AgentsConversationnels: React.FC<AgentsConversationnelsProps> = ({
                   Lien à partager
                 </p>
                 <p className="mt-2 break-all font-mono text-[11px] text-zinc-400">
-                  {`aixpt.ca/agents-conversationnels/${nicheUrlSlug(niche.id)}`}
+                  {`aixpt.ca${buildShortDemoPath('chat', niche.id, clientSlug)}`}
                 </p>
                 <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">
-                  Le sélecteur de secteur ci-dessus change l'URL : copiez-la pour envoyer directement
-                  la bonne démo à un prospect.
+                  Le sélecteur de secteur ci-dessus change l'URL de cette page. Pour envoyer
+                  directement la démo, utilisez le lien court ci-dessus.
                 </p>
               </div>
             </div>
